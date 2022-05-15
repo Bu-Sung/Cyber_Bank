@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package user;
+import cyber.bank.Db;
 
 /**
  *
@@ -32,14 +33,11 @@ public class Create_Account extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
-        name = new javax.swing.JTextField();
-        pw = new javax.swing.JTextField();
+        ID = new javax.swing.JTextField();
+        NAME = new javax.swing.JTextField();
+        PW = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        kind = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        radio = new javax.swing.JRadioButton();
-        raido2 = new javax.swing.JRadioButton();
+        KIND = new javax.swing.JComboBox<>();
         create = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
@@ -54,22 +52,22 @@ public class Create_Account extends javax.swing.JFrame {
 
         jLabel4.setText("계좌 비밀 번호");
 
-        id.setEditable(false);
+        ID.setEditable(false);
+        ID.setText("kbs");
 
-        name.setEditable(false);
+        NAME.setEditable(false);
+        NAME.setText("kim");
 
         jLabel5.setText("통장 종류");
 
-        jLabel6.setText("카드 개설 여부");
-
-        buttonGroup1.add(radio);
-        radio.setSelected(true);
-        radio.setText("Yes");
-
-        buttonGroup1.add(raido2);
-        raido2.setText("No");
+        KIND.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "입출금통장", "청년희망적금", "청년주택청약" }));
 
         create.setText("개설하기");
+        create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createActionPerformed(evt);
+            }
+        });
 
         exit.setText("나가기");
 
@@ -77,73 +75,79 @@ public class Create_Account extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(112, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(83, 83, 83))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(74, 74, 74)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(80, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(71, 71, 71))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(id)
-                            .addComponent(name)
-                            .addComponent(pw))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5)
-                                .addComponent(kind, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6)
-                                .addComponent(radio)
-                                .addComponent(raido2)
-                                .addComponent(create, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)))))
-                .addContainerGap())
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(ID)
+                    .addComponent(NAME))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(PW, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(KIND, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(create, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(kind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(KIND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(radio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(raido2)))
-                .addGap(9, 9, 9)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NAME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
                 .addComponent(create)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(exit)
-                .addGap(18, 18, 18))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
+        //계좌 개설하기
+        String id = ID.getText(); //화면에 있는 아이디 값 받아오기
+        String name = NAME.getText(); //화면에 있는 이름 값 받아오기
+        String pw = PW.getText(); //화면에 있는 비밀번호 값 받아오기
+        String kind = KIND.getSelectedItem().toString(); // 화면에 있는 통장 종류 값 받아오기
+        //통장 종류에 따라 new
+        //통장.create_Account(정보~~)
+        /*
+        create_Account(아이디, 이름, 계좌비번, 종류){
+            //통장 종류 설정
+            // 카드 개설 가능 여부 설정
+            //계좌번호 랜덤 생성
+            // 정보를 통해 sql 문 작성
+            //insert into account value(계좌번호, 아이디, 통장 종류, 카드 개설 가능 여부 (yes or no),0,0);
+            //Db.java 클래스의 삽입문 사용
+        }
+        */
+    }//GEN-LAST:event_createActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,20 +186,17 @@ public class Create_Account extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ID;
+    private javax.swing.JComboBox<String> KIND;
+    private javax.swing.JTextField NAME;
+    private javax.swing.JTextField PW;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton create;
     private javax.swing.JButton exit;
-    private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JComboBox<String> kind;
-    private javax.swing.JTextField name;
-    private javax.swing.JTextField pw;
-    private javax.swing.JRadioButton radio;
-    private javax.swing.JRadioButton raido2;
     // End of variables declaration//GEN-END:variables
 }

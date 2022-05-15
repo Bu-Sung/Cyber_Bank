@@ -4,18 +4,46 @@
  * and open the template in the editor.
  */
 package user;
-
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author User
  */
 public class User_Main extends javax.swing.JFrame {
-
+     Connection conn =null;
+    Statement stmt =null;
+    ResultSet rs = null;
     /**
      * Creates new form User_Main
      */
     public User_Main() {
         initComponents();
+        DefaultTableModel model = (DefaultTableModel) TABLE.getModel();
+        String sql = "select account_num, balance,create_card from account where id='kbs'";
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //접속 URL
+            String jdbcDriver ="jdbc:mysql://49.50.166.193:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
+            //Mysql bank 데이터베이스와 연결
+            
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                Object[] list = {rs.getString("account_num"), rs.getString("balance"), rs.getString("create_card") }; 
+                model.addRow(list);
+            }
+            
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (stmt !=null) try { stmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
+        
     }
 
     /**
@@ -29,7 +57,7 @@ public class User_Main extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        TABLE = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         event = new javax.swing.JButton();
         exit = new javax.swing.JButton();
@@ -40,7 +68,7 @@ public class User_Main extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         jLabel1.setText("회원 메인");
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -48,22 +76,15 @@ public class User_Main extends javax.swing.JFrame {
                 "계좌 번호", "잔액", "카드 여부"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(table);
+        jScrollPane1.setViewportView(TABLE);
 
         jButton1.setText("계좌 개설 하기");
 
@@ -154,12 +175,12 @@ public class User_Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TABLE;
     private javax.swing.JButton event;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton send;
-    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

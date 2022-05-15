@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/user/User_Main.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/manager/Insert_event.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/cyber/bank/Login_Frame.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/manager/Manager_Main.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/cyber/bank/Event.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/manager/User_Level.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/cyber/bank/Db.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/user/User_event.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/user/Create_Account.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber-Bank/src/cyber/bank/CyberBank.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/Create_Account.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/CyberBank.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/User_Main.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/Db.java</file>
         </group>
     </open-files>
 </project-private>
