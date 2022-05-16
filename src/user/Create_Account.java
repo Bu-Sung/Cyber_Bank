@@ -152,6 +152,15 @@ public class Create_Account extends javax.swing.JFrame {
             //Db.java 클래스의 삽입문 사용
         }
         */
+        if(kind=="입출금통장"){
+            //페이지 연결
+        }
+        else if(kind=="적금통장"){
+            //페이지 연결
+        }
+        else{
+            //페이지 연결
+        }
         
         
     }//GEN-LAST:event_createActionPerformed
