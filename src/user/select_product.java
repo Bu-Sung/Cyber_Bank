@@ -145,19 +145,19 @@ public class Select_product extends javax.swing.JFrame {
         if(!product.isEmpty()){
             if(product.equals("메론입출금")){
                 Melon_Bankbook b = new Melon_Bankbook();
-                b.create_Account(id, pw, kind);
+                b.create_Account(id, pw);
                 goto_Main();
             }else if(product.equals("예금")){
                 Saving_Account b = new Saving_Account();
-                b.create_Account(id, pw, kind);
+                b.create_Account(id, pw);
                 goto_Main();
             }else if(product.equals("청년주택청약")){
                 Youth_Housing_Subscription b = new  Youth_Housing_Subscription();
-                b.create_Account(id, pw, kind);
+                b.create_Account(id, pw);
                 goto_Main();
             }else if(product.equals("청년희망적금")){
                 Youth_Hope_Savings b = new Youth_Hope_Savings();
-                b.create_Account(id,  pw, kind);
+                b.create_Account(id,  pw);
                 goto_Main();
             }else{
                 showMessageDialog(null,"잘못 선택하셨습니다.");
