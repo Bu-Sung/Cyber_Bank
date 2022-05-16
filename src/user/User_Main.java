@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class User_Main extends javax.swing.JFrame {
-     Connection conn =null;
+    Connection conn =null;
     Statement stmt =null;
     ResultSet rs = null;
     /**
@@ -20,7 +20,7 @@ public class User_Main extends javax.swing.JFrame {
     public User_Main() {
         initComponents();
         DefaultTableModel model = (DefaultTableModel) TABLE.getModel();
-        String sql = "select account_num, balance,create_card from account where id='kbs'";
+        String sql = "select * from account where id='kbs'";
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
@@ -33,7 +33,7 @@ public class User_Main extends javax.swing.JFrame {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()){
-                Object[] list = {rs.getString("account_num"), rs.getString("balance"), rs.getString("create_card") }; 
+                Object[] list = {rs.getString("account_num"), rs.getString("balance"), rs.getString("card") , rs.getString("benefit") }; 
                 model.addRow(list);
             }
             
@@ -73,11 +73,11 @@ public class User_Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "계좌 번호", "잔액", "카드 여부"
+                "계좌 번호", "잔액", "카드 여부", "혜택"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

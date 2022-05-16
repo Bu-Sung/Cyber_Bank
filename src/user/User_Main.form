@@ -93,10 +93,11 @@
         <Component class="javax.swing.JTable" name="TABLE">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="0">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="&#xacc4;&#xc88c; &#xbc88;&#xd638;" type="java.lang.Object"/>
                 <Column editable="false" title="&#xc794;&#xc561;" type="java.lang.Object"/>
                 <Column editable="false" title="&#xce74;&#xb4dc; &#xc5ec;&#xbd80;" type="java.lang.Object"/>
+                <Column editable="false" title="&#xd61c;&#xd0dd;" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>
