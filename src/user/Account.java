@@ -17,5 +17,5 @@ abstract class Account {
   
   abstract String benefits();
   
-  abstract void create_Account(String Id, String Name, String Pw, String Kind);
+  abstract void create_Account(String Id, String Pw, String Kind);
 }

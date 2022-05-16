@@ -2,9 +2,13 @@
 package cyber.bank;
 
 import java.sql.*;
+import static javax.swing.JOptionPane.showMessageDialog;
+import user.User_Main;
 
 public class Login_Frame extends javax.swing.JFrame {
-
+    Connection conn =null;
+    Statement stmt =null;
+    ResultSet rs = null;
     public Login_Frame() {
         initComponents();
     }
@@ -14,11 +18,11 @@ public class Login_Frame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         login_btn = new javax.swing.JButton();
-        id_field = new javax.swing.JTextField();
-        pw_field = new javax.swing.JTextField();
+        ID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         exit = new javax.swing.JButton();
+        PW = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,18 +56,18 @@ public class Login_Frame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(pw_field, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(id_field, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 81, Short.MAX_VALUE))
+                                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(PW, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 79, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(exit)))
@@ -80,15 +84,15 @@ public class Login_Frame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pw_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(PW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(login_btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(exit)
                 .addContainerGap())
         );
@@ -103,7 +107,38 @@ public class Login_Frame extends javax.swing.JFrame {
 
     private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
         // TODO add your handling code here:
-        
+        String sql = "select * from user where id='"+ID.getText()+"'";
+        String pw = new String(PW.getPassword());
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //접속 URL
+            String jdbcDriver ="jdbc:mysql://49.50.166.193:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
+            //Mysql bank 데이터베이스와 연결
+            
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                if(rs.getString("pw").equals(pw)){
+                    if(rs.getString("id").contains("user")){
+                        User_Main u = new User_Main(rs.getString("id"),rs.getString("name"));
+                        u.setVisible(true);
+                        setVisible(false);
+                    }
+                }else{
+                    showMessageDialog(null,"비밀번호 오류입니다.");
+                }
+            }else{
+                showMessageDialog(null,"아이디 오류입니다.");
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (stmt !=null) try { stmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
     }//GEN-LAST:event_login_btnActionPerformed
 
     public static void main(String args[]) {
@@ -139,12 +174,12 @@ public class Login_Frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ID;
+    private javax.swing.JPasswordField PW;
     private javax.swing.JButton exit;
-    private javax.swing.JTextField id_field;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton login_btn;
-    private javax.swing.JTextField pw_field;
     // End of variables declaration//GEN-END:variables
 }
