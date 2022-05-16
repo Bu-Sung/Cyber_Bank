@@ -70,7 +70,7 @@ public class Create_Account extends javax.swing.JFrame {
             }
         });
 
-        create.setText("개설하기");
+        create.setText("다음");
         create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createActionPerformed(evt);
