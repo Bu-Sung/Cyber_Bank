@@ -4,19 +4,24 @@
  * and open the template in the editor.
  */
 package user;
-import cyber.bank.Db;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
  * @author User
  */
 public class Create_Account extends javax.swing.JFrame {
-
+    String id = "user1";
+    String name = "고객1";
     /**
      * Creates new form Create_account
      */
-    public Create_Account() {
+    public Create_Account(String id, String name) {
         initComponents();
+        this.id=id;
+        this.name=name;
+        ID.setText(id);
+        NAME.setText(name);
     }
 
     /**
@@ -53,14 +58,12 @@ public class Create_Account extends javax.swing.JFrame {
         jLabel4.setText("계좌 비밀 번호");
 
         ID.setEditable(false);
-        ID.setText("kbs");
 
         NAME.setEditable(false);
-        NAME.setText("kim");
 
         jLabel5.setText("통장 종류");
 
-        KIND.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "입출금통장", "청년희망적금", "청년주택청약" }));
+        KIND.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "입출금통장", "적금통장", "주택청약통장" }));
         KIND.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 KINDActionPerformed(evt);
@@ -140,27 +143,15 @@ public class Create_Account extends javax.swing.JFrame {
         String name = NAME.getText(); //화면에 있는 이름 값 받아오기
         String pw = PW.getText(); //화면에 있는 비밀번호 값 받아오기
         String kind = KIND.getSelectedItem().toString(); // 화면에 있는 통장 종류 값 받아오기
-        //통장 종류에 따라 new
-        //통장.create_Account(정보~~)
-        /*
-        create_Account(아이디, 이름, 계좌비번, 종류){
-            //통장 종류 설정
-            // 카드 개설 가능 여부 설정
-            //계좌번호 랜덤 생성
-            // 정보를 통해 sql 문 작성
-            //insert into account value(계좌번호, 아이디, 통장 종류, 카드 개설 가능 여부 (yes or no),0,0);
-            //Db.java 클래스의 삽입문 사용
+        System.out.println(id+name+pw+kind);
+        if(!id.isEmpty() && !name.isEmpty() && !pw.isEmpty() && !kind.isEmpty()){
+            Select_product p = new Select_product(id,name,pw,kind);
+            p.setVisible(true);
+            setVisible(false);
+        }else{
+            showMessageDialog(null,"작성하지 않은 항목이 존재합니다.");
         }
-        */
-        if(kind=="입출금통장"){
-            //페이지 연결
-        }
-        else if(kind=="적금통장"){
-            //페이지 연결
-        }
-        else{
-            //페이지 연결
-        }
+        
         
         
     }//GEN-LAST:event_createActionPerformed
@@ -168,42 +159,6 @@ public class Create_Account extends javax.swing.JFrame {
     private void KINDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KINDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_KINDActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Create_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Create_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Create_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Create_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Create_Account().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ID;

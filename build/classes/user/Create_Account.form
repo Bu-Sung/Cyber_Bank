@@ -115,13 +115,11 @@
     <Component class="javax.swing.JTextField" name="ID">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="kbs"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="NAME">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="kim"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="PW">
@@ -136,8 +134,8 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="3">
             <StringItem index="0" value="&#xc785;&#xcd9c;&#xae08;&#xd1b5;&#xc7a5;"/>
-            <StringItem index="1" value="&#xccad;&#xb144;&#xd76c;&#xb9dd;&#xc801;&#xae08;"/>
-            <StringItem index="2" value="&#xccad;&#xb144;&#xc8fc;&#xd0dd;&#xccad;&#xc57d;"/>
+            <StringItem index="1" value="&#xc801;&#xae08;&#xd1b5;&#xc7a5;"/>
+            <StringItem index="2" value="&#xc8fc;&#xd0dd;&#xccad;&#xc57d;&#xd1b5;&#xc7a5;"/>
           </StringArray>
         </Property>
       </Properties>

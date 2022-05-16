@@ -5,22 +5,31 @@
  */
 package user;
 import java.sql.*;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author User
  */
-public class select_product extends javax.swing.JFrame {
+public class Select_product extends javax.swing.JFrame {
     Connection conn =null;
     Statement stmt =null;
-    ResultSet rs = null;    
+    ResultSet rs = null;  
+    String id =null;
+    String name = null;
+    String pw =null;
+    String kind = null;
     /**
      * Creates new form select_product
      */
-    public select_product() {
+    public Select_product(String id,String name, String pw, String kind) {
         initComponents();
+        this.id=id;
+        this.pw=pw;
+        this.name =name;
+        this.kind=kind;
         DefaultTableModel model = (DefaultTableModel) PRODUCT.getModel();
-        String sql = "select * from product";
+        String sql = "select * from product where kind='"+kind+"'";
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
@@ -44,7 +53,12 @@ public class select_product extends javax.swing.JFrame {
             if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
         }
     }
-
+    public void goto_Main(){
+        showMessageDialog(null,"계좌가 개설 되었습니다.");
+        User_Main u = new User_Main(id,name);
+        u.setVisible(true);
+        setVisible(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,6 +97,11 @@ public class select_product extends javax.swing.JFrame {
         jScrollPane1.setViewportView(PRODUCT);
 
         CREATE.setText("개설하기");
+        CREATE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CREATEActionPerformed(evt);
+            }
+        });
 
         EXIT.setText("나가기");
 
@@ -119,40 +138,36 @@ public class select_product extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void CREATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATEActionPerformed
+        // TODO add your handling code here:
+        //상품 선택해서 계좌 개설하기
+        String product = (String)PRODUCT.getModel().getValueAt(PRODUCT.getSelectedRow(), 0);
+        if(!product.isEmpty()){
+            if(product.equals("메론입출금")){
+                Melon_Bankbook b = new Melon_Bankbook();
+                b.create_Account(id, pw, kind);
+                goto_Main();
+            }else if(product.equals("예금")){
+                Saving_Account b = new Saving_Account();
+                b.create_Account(id, pw, kind);
+                goto_Main();
+            }else if(product.equals("청년주택청약")){
+                Youth_Housing_Subscription b = new  Youth_Housing_Subscription();
+                b.create_Account(id, pw, kind);
+                goto_Main();
+            }else if(product.equals("청년희망적금")){
+                Youth_Hope_Savings b = new Youth_Hope_Savings();
+                b.create_Account(id,  pw, kind);
+                goto_Main();
+            }else{
+                showMessageDialog(null,"잘못 선택하셨습니다.");
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(select_product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(select_product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(select_product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(select_product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }else{
+            showMessageDialog(null,"선택한 상품이 없습니다.");
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new select_product().setVisible(true);
-            }
-        });
-    }
+        
+        
+    }//GEN-LAST:event_CREATEActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CREATE;
