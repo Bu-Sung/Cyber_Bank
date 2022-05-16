@@ -61,6 +61,11 @@ public class Create_Account extends javax.swing.JFrame {
         jLabel5.setText("통장 종류");
 
         KIND.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "입출금통장", "청년희망적금", "청년주택청약" }));
+        KIND.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KINDActionPerformed(evt);
+            }
+        });
 
         create.setText("개설하기");
         create.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +152,22 @@ public class Create_Account extends javax.swing.JFrame {
             //Db.java 클래스의 삽입문 사용
         }
         */
+        if(kind=="입출금통장"){
+            //페이지 연결
+        }
+        else if(kind=="적금통장"){
+            //페이지 연결
+        }
+        else{
+            //페이지 연결
+        }
+        
+        
     }//GEN-LAST:event_createActionPerformed
+
+    private void KINDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KINDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KINDActionPerformed
 
     /**
      * @param args the command line arguments
