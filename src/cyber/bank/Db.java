@@ -9,7 +9,7 @@ public class Db {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
-            String jdbcDriver ="jdbc:mysql://49.50.166.193:3306/bank?serverTimezone=UTC"; 
+            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
             String dbUser ="banker"; //MySQL 접속 아이디
             String dbPass ="1234"; //비밀번호
             //Mysql bank 데이터베이스와 연결
