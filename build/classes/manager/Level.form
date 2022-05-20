@@ -191,6 +191,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xb098;&#xac00;&#xae30;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EXITActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="ONE">
       <Properties>

@@ -129,6 +129,7 @@ public class Login_Frame extends javax.swing.JFrame {
                     }else if(rs.getString("id").contains("manager")){
                         Manager_Main u = new Manager_Main(rs.getString("id"),rs.getString("name"));
                         u.setVisible(true);
+                        setVisible(false);
                     }
                 }else{
                     showMessageDialog(null,"비밀번호 오류입니다.");

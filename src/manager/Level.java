@@ -1,15 +1,20 @@
 
 package manager;
 
+import cyber.bank.gui.Manager_Main;
 import java.util.LinkedList;
+
+
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Level extends javax.swing.JFrame {
-
-
+    String id;
+    String name;
     LinkedList<String> list = new LinkedList<String>();
-    public Level() {
+    public Level(String id, String name) {
         initComponents();//화면 띄우기
+        this.id=id;
+        this.name=name;
     }
     
     public void insertLevel(String str){ //화면 초기화를 위한 함수
@@ -82,6 +87,11 @@ public class Level extends javax.swing.JFrame {
         });
 
         EXIT.setText("나가기");
+        EXIT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EXITActionPerformed(evt);
+            }
+        });
 
         ONE.setText("캐시백 5%");
 
@@ -218,40 +228,13 @@ public class Level extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ACCEPTActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void EXITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXITActionPerformed
+        // TODO add your handling code here:
+        Manager_Main m = new Manager_Main(id,name);
+        m.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_EXITActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Level().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ACCEPT;

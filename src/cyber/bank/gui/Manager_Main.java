@@ -5,17 +5,22 @@
  */
 package cyber.bank.gui;
 
+import manager.Level;
+
 /**
  *
  * @author User
  */
 public class Manager_Main extends javax.swing.JFrame {
-
+    String id;
+    String name;
     /**
      * Creates new form Manager_Main
      */
     public Manager_Main(String id, String name) {
         initComponents();
+        this.id=id;
+        this.name=name;
     }
 
     /**
@@ -32,7 +37,7 @@ public class Manager_Main extends javax.swing.JFrame {
         manager_event = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        LEVEL = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -69,7 +74,12 @@ public class Manager_Main extends javax.swing.JFrame {
 
         jButton1.setText("공지사항 등록");
 
-        jButton2.setText("회원 등급 조정");
+        LEVEL.setText("등급 혜택 조정");
+        LEVEL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LEVELActionPerformed(evt);
+            }
+        });
 
         exit.setText("나가기");
 
@@ -90,7 +100,7 @@ public class Manager_Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LEVEL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -107,7 +117,7 @@ public class Manager_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(LEVEL)
                 .addGap(7, 7, 7)
                 .addComponent(exit)
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -116,10 +126,17 @@ public class Manager_Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void LEVELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LEVELActionPerformed
+        // TODO add your handling code here:
+        Level l = new Level(id,name);
+        l.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_LEVELActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LEVEL;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
