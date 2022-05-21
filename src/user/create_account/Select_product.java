@@ -8,6 +8,7 @@ import cyber.bank.gui.User_Main;
 import java.sql.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
+import user.User;
 
 
 
@@ -19,18 +20,16 @@ public class Select_product extends javax.swing.JFrame {
     Connection conn =null;
     Statement stmt =null;
     ResultSet rs = null;  
-    String id =null;
-    String name = null;
+    User user;
     String pw =null;
     String kind = null;
     /**
      * Creates new form select_product
      */
-    public Select_product(String id,String name, String pw, String kind) {
+    public Select_product(User user, String pw, String kind) {
         initComponents();
-        this.id=id;
+        this.user=user;
         this.pw=pw;
-        this.name =name;
         this.kind=kind;
         DefaultTableModel model = (DefaultTableModel) PRODUCT.getModel();
         String sql = "select * from product where kind='"+kind+"'";
@@ -59,7 +58,7 @@ public class Select_product extends javax.swing.JFrame {
     }
     public void goto_Main(){
         showMessageDialog(null,"계좌가 개설 되었습니다.");
-        User_Main u = new User_Main(id,name);
+        User_Main u = new User_Main(user);
         u.setVisible(true);
         setVisible(false);
     }
@@ -149,19 +148,19 @@ public class Select_product extends javax.swing.JFrame {
         if(!product.isEmpty()){
             if(product.equals("메론입출금")){
                 Melon_Bankbook b = new Melon_Bankbook();
-                b.create_Account(id, pw);
+                b.create_Account(user);
                 goto_Main();
             }else if(product.equals("예금")){
                 Saving_Account b = new Saving_Account();
-                b.create_Account(id, pw);
+                b.create_Account(user);
                 goto_Main();
             }else if(product.equals("청년주택청약")){
                 Youth_Housing_Subscription b = new  Youth_Housing_Subscription();
-                b.create_Account(id, pw);
+                b.create_Account(user);
                 goto_Main();
             }else if(product.equals("청년희망적금")){
                 Youth_Hope_Savings b = new Youth_Hope_Savings();
-                b.create_Account(id,  pw);
+                b.create_Account(user);
                 goto_Main();
             }else{
                 showMessageDialog(null,"잘못 선택하셨습니다.");

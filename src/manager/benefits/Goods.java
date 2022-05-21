@@ -1,7 +1,4 @@
-package manager;
-
-
-
+package manager.benefits;
 
 class Goods extends Level_Benefits {
     @Override

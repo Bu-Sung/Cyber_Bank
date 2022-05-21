@@ -6,23 +6,22 @@
 package cyber.bank.gui;
 import user.create_account.Select_product;
 import static javax.swing.JOptionPane.showMessageDialog;
+import user.User;
 
 /**
  *
  * @author User
  */
 public class Create_Account extends javax.swing.JFrame {
-    String id = "user1";
-    String name = "고객1";
+    User user;
     /**
      * Creates new form Create_account
      */
-    public Create_Account(String id, String name) {
+    public Create_Account(User user) {
         initComponents();
-        this.id=id;
-        this.name=name;
-        ID.setText(id);
-        NAME.setText(name);
+        this.user=user;
+        ID.setText(user.getId());
+        NAME.setText(user.getName());
     }
 
     /**
@@ -146,7 +145,7 @@ public class Create_Account extends javax.swing.JFrame {
         String kind = KIND.getSelectedItem().toString(); // 화면에 있는 통장 종류 값 받아오기
         System.out.println(id+name+pw+kind);
         if(!id.isEmpty() && !name.isEmpty() && !pw.isEmpty() && !kind.isEmpty()){
-            Select_product p = new Select_product(id,name,pw,kind);
+            Select_product p = new Select_product(user,pw,kind);
             p.setVisible(true);
             setVisible(false);
         }else{

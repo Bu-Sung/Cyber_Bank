@@ -6,6 +6,7 @@
 package cyber.bank.gui;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
+import user.User;
 /**
  *
  * @author User
@@ -14,18 +15,14 @@ public class User_Main extends javax.swing.JFrame {
     Connection conn =null;
     Statement stmt =null;
     ResultSet rs = null;
-    String id= null;
-    String name =null;
-    /**
-     * Creates new form User_Main
-     */
-    public User_Main(String id, String name) {
+    User user;
+    
+    public User_Main(User user) {
         initComponents();
-        this.id=id;
-        this.name=name;
-        NAME.setText(name);
+        this.user = user;
+        NAME.setText(user.getName());
         DefaultTableModel model = (DefaultTableModel) TABLE.getModel();
-        String sql = "select * from account where id='"+id+"'";
+        String sql = "select * from account where id='"+user.getId()+"'";
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
@@ -157,7 +154,7 @@ public class User_Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         //계좌 개설하기
-        Create_Account a = new Create_Account(id,name);
+        Create_Account a = new Create_Account(user);
         a.setVisible(true);
         setVisible(false);
 
