@@ -1,4 +1,4 @@
-package manager;
+package manager.benefits;
 
 import java.util.LinkedList;
 

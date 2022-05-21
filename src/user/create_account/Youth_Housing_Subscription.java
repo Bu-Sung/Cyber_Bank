@@ -2,6 +2,7 @@
 package user.create_account;
 import user.create_account.Account;
 import cyber.bank.Db;
+import user.User;
 
 class Youth_Housing_Subscription extends Account {
     public Youth_Housing_Subscription(){
@@ -13,12 +14,13 @@ class Youth_Housing_Subscription extends Account {
         return "청년주택청약";
     }
     
-    public void create_Account(String Id, String Pw){
+    public void create_Account(User user){
+        this.user=user;
      //계좌번호 8자리 랜덤 생성
      int num=((int)(Math.random()*90000000)+10000000);
      accountNumber=Integer.toString(num);
      //db 삽입을 위한
-     String sql="insert into account value('"+accountNumber+"', '"+Id+"','"+ Pw+"','"+account_Type.type()+"','"+with_Or_Without_Card.card()+"','"+benefits()+"',0,0 )";
+     String sql="insert into account value('"+accountNumber+"', '"+user.getId()+"','"+ user.getName()+"','"+account_Type.type()+"','"+with_Or_Without_Card.card()+"','"+benefits()+"',0,0 )";
      Db db = new Db();
      db.apply_Sql(sql);
   }

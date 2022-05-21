@@ -1,20 +1,19 @@
 
-package manager;
+package manager.benefits;
 
 import cyber.bank.gui.Manager_Main;
 import java.util.LinkedList;
 
 
 import static javax.swing.JOptionPane.showMessageDialog;
+import manager.Manager;
 
-public class Level extends javax.swing.JFrame {
-    String id;
-    String name;
+public class Change_Benfits extends javax.swing.JFrame {
+    Manager manager;
     LinkedList<String> list = new LinkedList<String>();
-    public Level(String id, String name) {
+    public Change_Benfits(Manager manager) {
         initComponents();//화면 띄우기
-        this.id=id;
-        this.name=name;
+        this.manager=manager;
     }
     
     public void insertLevel(String str){ //화면 초기화를 위한 함수
@@ -230,7 +229,7 @@ public class Level extends javax.swing.JFrame {
 
     private void EXITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXITActionPerformed
         // TODO add your handling code here:
-        Manager_Main m = new Manager_Main(id,name);
+        Manager_Main m = new Manager_Main(manager);
         m.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_EXITActionPerformed

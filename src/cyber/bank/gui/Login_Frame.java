@@ -3,7 +3,8 @@ package cyber.bank.gui;
 
 import java.sql.*;
 import static javax.swing.JOptionPane.showMessageDialog;
-import cyber.bank.gui.User_Main;
+import manager.Manager;
+import user.User;
 
 public class Login_Frame extends javax.swing.JFrame {
     Connection conn =null;
@@ -123,11 +124,13 @@ public class Login_Frame extends javax.swing.JFrame {
             if(rs.next()){
                 if(rs.getString("pw").equals(pw)){
                     if(rs.getString("id").contains("user")){
-                        User_Main u = new User_Main(rs.getString("id"),rs.getString("name"));
+                        User user = new User(rs.getString("id"),rs.getString("name"),rs.getString("level"),rs.getInt("total"));
+                        User_Main u = new User_Main(user);
                         u.setVisible(true);
                         setVisible(false);
                     }else if(rs.getString("id").contains("manager")){
-                        Manager_Main u = new Manager_Main(rs.getString("id"),rs.getString("name"));
+                        Manager manager = new Manager(rs.getString("id"),rs.getString("name"));
+                        Manager_Main u = new Manager_Main(manager);
                         u.setVisible(true);
                         setVisible(false);
                     }
