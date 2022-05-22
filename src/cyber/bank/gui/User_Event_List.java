@@ -5,17 +5,49 @@
  */
 package cyber.bank.gui;
 
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import user.User;
+
 /**
  *
  * @author User
  */
 public class User_Event_List extends javax.swing.JFrame {
-
+    Connection conn =null;
+    PreparedStatement pstmt =null;
+    ResultSet rs = null;
+    User user=null;
+    DefaultTableModel table;
     /**
      * Creates new form User_event
      */
-    public User_Event_List() {
-        initComponents();
+    public User_Event_List(User user) {
+        try {
+            initComponents();
+            this.user=user;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //접속 URL
+            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
+            String sql = "select * from user_news"; //이미 저장된 혜택 지우기
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            table = (DefaultTableModel)TABLE.getModel();
+            table.setNumRows(0);
+            while(rs.next()){
+                Object[] list = {rs.getString("date"),rs.getString("title")};
+                table.addRow(list);//행추가
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (rs !=null) try {rs.close();} catch (SQLException ex) {}
+            if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
     }
 
     /**
@@ -29,7 +61,7 @@ public class User_Event_List extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        TABLE = new javax.swing.JTable();
         exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -37,7 +69,7 @@ public class User_Event_List extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         jLabel1.setText("공지사항");
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -60,9 +92,19 @@ public class User_Event_List extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(table);
+        TABLE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TABLEMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TABLE);
 
         exit.setText("나가기");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,46 +136,25 @@ public class User_Event_List extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(User_Event_List.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(User_Event_List.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(User_Event_List.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(User_Event_List.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        User_Main u = new User_Main(user);
+        u.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_exitActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new User_Event_List().setVisible(true);
-            }
-        });
-    }
+    private void TABLEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TABLEMouseClicked
+        // TODO add your handling code here:
+        int row = TABLE.getSelectedRow();
+        String key = (String) table.getValueAt(row, 1);
+        Event_View v = new Event_View(key);
+        v.setVisible(true);
+    }//GEN-LAST:event_TABLEMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TABLE;
     private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

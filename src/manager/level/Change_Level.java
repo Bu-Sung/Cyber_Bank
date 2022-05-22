@@ -18,6 +18,7 @@ import user.User;
  *
  * @author User
  */
+//회원 통장 총 금액에 따라 등급 변경
 public final class Change_Level extends javax.swing.JFrame {
     User user;
     Manager manager;

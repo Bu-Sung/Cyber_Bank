@@ -66,6 +66,7 @@ public class User_Main extends javax.swing.JFrame {
         send = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("고객");
 
         NAME.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         NAME.setText("회원 메인");
@@ -96,6 +97,11 @@ public class User_Main extends javax.swing.JFrame {
         });
 
         event.setText("공지사항 확인");
+        event.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eventActionPerformed(evt);
+            }
+        });
 
         exit.setText("로그아웃");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -167,6 +173,13 @@ public class User_Main extends javax.swing.JFrame {
         l.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_exitActionPerformed
+
+    private void eventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventActionPerformed
+        // TODO add your handling code here:
+        User_Event_List e = new User_Event_List(user);
+        e.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_eventActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

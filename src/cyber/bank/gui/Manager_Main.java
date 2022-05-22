@@ -5,9 +5,15 @@
  */
 package cyber.bank.gui;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import manager.Manager;
 import manager.benefits.Change_Benfits;
+import manager.event.Event;
 import manager.level.Change_Level;
+import user.User;
 
 /**
  *
@@ -15,13 +21,41 @@ import manager.level.Change_Level;
  */
 public class Manager_Main extends javax.swing.JFrame {
     Manager manager;
+    Connection conn =null;
+    PreparedStatement pstmt =null;
+    ResultSet rs = null;
+    DefaultTableModel table;
+        
     /**
      * Creates new form Manager_Main
      */
     public Manager_Main(Manager manager) {
-        initComponents();
-        this.manager=manager;
-        jLabel1.setText(manager.getName());
+        try {
+            initComponents();
+            this.manager=manager;
+            jLabel1.setText(manager.getName());
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //접속 URL
+            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
+            String sql = "select * from manager_news"; //이미 저장된 혜택 지우기
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            table = (DefaultTableModel)TABLE.getModel();
+            table.setNumRows(0);
+            while(rs.next()){
+                Object[] list = {rs.getString("date"),rs.getString("title"),rs.getString("writer")};
+                table.addRow(list);//행추가
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (rs !=null) try {rs.close();} catch (SQLException ex) {}
+            if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
     }
 
     /**
@@ -35,7 +69,7 @@ public class Manager_Main extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        manager_event = new javax.swing.JTable();
+        TABLE = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         LEVEL = new javax.swing.JButton();
@@ -43,22 +77,23 @@ public class Manager_Main extends javax.swing.JFrame {
         CHANGELEVEL = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("관리자");
 
         jLabel1.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
 
-        manager_event.setModel(new javax.swing.table.DefaultTableModel(
+        TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "일시", "제목"
+                "일시", "제목", "작성자"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -69,11 +104,21 @@ public class Manager_Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(manager_event);
+        TABLE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TABLEMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TABLE);
 
         jLabel2.setText("등록된 공지사항");
 
         jButton1.setText("공지사항 등록");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         LEVEL.setText("등급 혜택 조정");
         LEVEL.addActionListener(new java.awt.event.ActionListener() {
@@ -168,14 +213,29 @@ public class Manager_Main extends javax.swing.JFrame {
        setVisible(false);
     }//GEN-LAST:event_exitActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Event e = new Event(manager);
+        e.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void TABLEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TABLEMouseClicked
+        // TODO add your handling code here:
+        int row = TABLE.getSelectedRow();
+        String key = (String) table.getValueAt(row, 1);
+        Event_View v = new Event_View(key);
+        v.setVisible(true);
+    }//GEN-LAST:event_TABLEMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CHANGELEVEL;
     private javax.swing.JButton LEVEL;
+    private javax.swing.JTable TABLE;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable manager_event;
     // End of variables declaration//GEN-END:variables
 }

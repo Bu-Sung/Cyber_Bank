@@ -26,6 +26,7 @@ public class Login_Frame extends javax.swing.JFrame {
         PW = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("로그인");
 
         jLabel1.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         jLabel1.setText("메론 은행");
