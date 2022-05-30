@@ -37,7 +37,7 @@
                       <Component id="exit" alignment="0" min="-2" pref="81" max="-2" attributes="0"/>
                       <Component id="insert_btn" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="title" alignment="0" max="32767" attributes="0"/>
+                  <Component id="TITLE" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
@@ -51,7 +51,7 @@
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-              <Component id="title" min="-2" max="-2" attributes="0"/>
+              <Component id="TITLE" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="value">
+        <Component class="javax.swing.JTextArea" name="NEWS">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -93,11 +93,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xb4f1;&#xb85d;&#xd558;&#xae30;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insert_btnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="exit">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xb098;&#xac00;&#xae30;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -109,7 +115,7 @@
         <Property name="text" type="java.lang.String" value="&#xc81c;&#xbaa9;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="title">
+    <Component class="javax.swing.JTextField" name="TITLE">
     </Component>
   </SubComponents>
 </Form>

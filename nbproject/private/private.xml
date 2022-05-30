@@ -3,37 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Vip.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Create_Account.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Select_product.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Goods.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Login_Frame.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/User_Main.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Account.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Event_View.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/Db.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Saving_Account.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Invitation_Ticket.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Level.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/User_Main.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Manager_Main.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/User_Level.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Bankbook.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/User_Event_List.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Nomal.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Event.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/With_Card.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Without_Card.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/User.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Melon_Bankbook.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Gold.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Create_Account.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/cyber/bank/gui/Login_Frame.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Installment_Savings.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/With_Or_Without_Card.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Youth_Housing_Subscription.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Account_Type.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Youth_Hope_Savings.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/CashBack.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Silver.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/manager/Level_Benefits.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Cyber_Bank/src/user/create_account/Melon_Bankbook.java</file>
         </group>
     </open-files>
 </project-private>

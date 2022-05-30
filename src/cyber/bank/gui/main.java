@@ -5,23 +5,19 @@
  */
 package cyber.bank.gui;
 
-import cyber.bank.Db;
-
 /**
  *
  * @author User
  */
-public class CyberBank {
+public class main {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
         // TODO code application logic here
-        Db db = new Db();
-        String sql1 = "insert into test value ('use')";
-        
-        db.apply_Sql(sql1);
-        
+        Login_Frame login = new Login_Frame();
+        login.setVisible(true);
     }
+    
 }

@@ -5,17 +5,45 @@
  */
 package cyber.bank.gui;
 
+import java.sql.*;
+
+
 /**
  *
  * @author User
  */
 public class Event_View extends javax.swing.JFrame {
-
+Connection conn =null;
+    PreparedStatement pstmt =null;
+    ResultSet rs = null;
     /**
      * Creates new form Event
      */
-    public Event_View() {
-        initComponents();
+    public Event_View(String title) {
+         try {
+            initComponents();
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //접속 URL
+            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
+            String sql = "select * from manager_news where title=?"; //이미 저장된 혜택 지우기
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, title);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                TITLE.setText(rs.getString("title"));
+                NEWS.setText(rs.getString("news"));
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (rs !=null) try {rs.close();} catch (SQLException ex) {}
+            if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
     }
 
     /**
@@ -28,27 +56,32 @@ public class Event_View extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        value = new javax.swing.JTextArea();
+        NEWS = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        title = new javax.swing.JTextField();
+        TITLE = new javax.swing.JTextField();
         exit = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        value.setEditable(false);
-        value.setColumns(20);
-        value.setRows(5);
-        jScrollPane1.setViewportView(value);
+        NEWS.setEditable(false);
+        NEWS.setColumns(20);
+        NEWS.setRows(5);
+        jScrollPane1.setViewportView(NEWS);
 
         jLabel1.setText("상세내용");
 
         jLabel2.setText("제목");
 
-        title.setEditable(false);
+        TITLE.setEditable(false);
 
         exit.setText("나가기");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         jLabel3.setText("공지 사항");
@@ -70,7 +103,7 @@ public class Event_View extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel1)
                                 .addComponent(jScrollPane1)
-                                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(TITLE, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -81,7 +114,7 @@ public class Event_View extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TITLE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -92,51 +125,21 @@ public class Event_View extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Event_View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Event_View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Event_View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Event_View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Event_View().setVisible(true);
-            }
-        });
-    }
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_exitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea NEWS;
+    private javax.swing.JTextField TITLE;
     private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField title;
-    private javax.swing.JTextArea value;
     // End of variables declaration//GEN-END:variables
 }

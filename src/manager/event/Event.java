@@ -3,19 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cyber.bank.gui;
+package manager.event;
+
+import cyber.bank.gui.Manager_Main;
+import static javax.swing.JOptionPane.showMessageDialog;
+import manager.Manager;
 
 /**
  *
  * @author User
  */
 public class Event extends javax.swing.JFrame {
-
+    Manager manager;
+    
     /**
      * Creates new form Insert_event
      */
-    public Event() {
+    public Event(Manager manager) {
         initComponents();
+        this.manager=manager;
+        
     }
 
     /**
@@ -29,25 +36,35 @@ public class Event extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        value = new javax.swing.JTextArea();
+        NEWS = new javax.swing.JTextArea();
         insert_btn = new javax.swing.JButton();
         exit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        title = new javax.swing.JTextField();
+        TITLE = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         jLabel1.setText("공지사항 등록하기");
 
-        value.setColumns(20);
-        value.setRows(5);
-        jScrollPane1.setViewportView(value);
+        NEWS.setColumns(20);
+        NEWS.setRows(5);
+        jScrollPane1.setViewportView(NEWS);
 
         insert_btn.setText("등록하기");
+        insert_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insert_btnActionPerformed(evt);
+            }
+        });
 
         exit.setText("나가기");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("내용");
 
@@ -69,7 +86,7 @@ public class Event extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(insert_btn, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(title))
+                    .addComponent(TITLE))
                 .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
@@ -80,7 +97,7 @@ public class Event extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jLabel3)
                 .addGap(1, 1, 1)
-                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TITLE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -95,50 +112,32 @@ public class Event extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Event.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Event.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Event.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Event.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void insert_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insert_btnActionPerformed
+        // TODO add your handling code here:
+        Insert_Event e = new Insert_Event();
+        Manager_Event m = new Manager_Event(e);
+        User_Event u = new User_Event(e);
+        e.addNews(TITLE.getText(),NEWS.getText(),manager.getName());
+        showMessageDialog(null,"이벤트 등록이 완료되었습니다.");
+        TITLE.setText(null);
+        NEWS.setText(null);
+    }//GEN-LAST:event_insert_btnActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Event().setVisible(true);
-            }
-        });
-    }
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        Manager_Main m = new Manager_Main(manager);
+        m.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_exitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea NEWS;
+    private javax.swing.JTextField TITLE;
     private javax.swing.JButton exit;
     private javax.swing.JButton insert_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField title;
-    private javax.swing.JTextArea value;
     // End of variables declaration//GEN-END:variables
 }
