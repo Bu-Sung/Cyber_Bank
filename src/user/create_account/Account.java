@@ -9,5 +9,5 @@ abstract class Account {
     protected With_Or_Without_Card with_Or_Without_Card;
     protected User user;
     abstract String benefits();
-    abstract void create_Account(User user);
+    abstract void create_Account(User user, String pw);
 }
