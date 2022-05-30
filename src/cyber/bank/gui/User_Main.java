@@ -90,7 +90,8 @@ public class User_Main extends javax.swing.JFrame {
         SEND = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         LOGOUT = new javax.swing.JButton();
-        TOMAIN = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        CREATE_C = new javax.swing.JButton();
         EVENT_P = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         E_TABLE = new javax.swing.JTable();
@@ -106,6 +107,7 @@ public class User_Main extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         C_KIND = new javax.swing.JComboBox<>();
         PRODUCT_P = new javax.swing.JPanel();
+        CREATE_C_P = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -167,7 +169,7 @@ public class User_Main extends javax.swing.JFrame {
 
         jPanel4.add(MAIN_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 550, 400));
 
-        SEND_P.setBackground(new java.awt.Color(0, 51, 51));
+        SEND_P.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout SEND_PLayout = new javax.swing.GroupLayout(SEND_P);
         SEND_P.setLayout(SEND_PLayout);
@@ -182,7 +184,13 @@ public class User_Main extends javax.swing.JFrame {
 
         jPanel4.add(SEND_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 550, 400));
 
-        TITLE_P.setBackground(new java.awt.Color(255, 255, 204));
+        TITLE_P.setBackground(new java.awt.Color(204, 255, 204));
+        TITLE_P.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TITLE_P.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TITLE_PMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("함초롬돋움", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -195,7 +203,7 @@ public class User_Main extends javax.swing.JFrame {
             .addGroup(TITLE_PLayout.createSequentialGroup()
                 .addGap(200, 200, 200)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         TITLE_PLayout.setVerticalGroup(
             TITLE_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,9 +213,9 @@ public class User_Main extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
-        jPanel4.add(TITLE_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, -1));
+        jPanel4.add(TITLE_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, -1));
 
-        MENU_P.setBackground(new java.awt.Color(204, 255, 204));
+        MENU_P.setBackground(new java.awt.Color(247, 247, 247));
         MENU_P.setPreferredSize(new java.awt.Dimension(150, 400));
 
         jLabel2.setText("님");
@@ -216,9 +224,9 @@ public class User_Main extends javax.swing.JFrame {
         NAME.setText("고객");
 
         LEVEL.setFont(new java.awt.Font("굴림", 1, 15)); // NOI18N
+        LEVEL.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         LEVEL.setText("Normal");
 
-        CREATE.setFont(new java.awt.Font("굴림", 0, 12)); // NOI18N
         CREATE.setText("계좌 개설하기");
         CREATE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,7 +234,6 @@ public class User_Main extends javax.swing.JFrame {
             }
         });
 
-        EVENT.setFont(new java.awt.Font("굴림", 0, 12)); // NOI18N
         EVENT.setText("공지사항확인");
         EVENT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,7 +241,6 @@ public class User_Main extends javax.swing.JFrame {
             }
         });
 
-        SEND.setFont(new java.awt.Font("굴림", 0, 12)); // NOI18N
         SEND.setText("송금하기");
         SEND.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,7 +251,6 @@ public class User_Main extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
         jLabel3.setText("메뉴");
 
-        LOGOUT.setFont(new java.awt.Font("굴림", 0, 12)); // NOI18N
         LOGOUT.setText("로그아웃");
         LOGOUT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -253,11 +258,10 @@ public class User_Main extends javax.swing.JFrame {
             }
         });
 
-        TOMAIN.setFont(new java.awt.Font("굴림", 0, 12)); // NOI18N
-        TOMAIN.setText("메인으로");
-        TOMAIN.addActionListener(new java.awt.event.ActionListener() {
+        CREATE_C.setText("카드 개설하기");
+        CREATE_C.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TOMAINActionPerformed(evt);
+                CREATE_CActionPerformed(evt);
             }
         });
 
@@ -265,52 +269,54 @@ public class User_Main extends javax.swing.JFrame {
         MENU_P.setLayout(MENU_PLayout);
         MENU_PLayout.setHorizontalGroup(
             MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MENU_PLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MENU_PLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MENU_PLayout.createSequentialGroup()
+                                .addComponent(NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))
+                            .addComponent(LEVEL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12))
             .addGroup(MENU_PLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(LOGOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(TOMAIN, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(SEND, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(EVENT, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(CREATE, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MENU_PLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MENU_PLayout.createSequentialGroup()
-                        .addComponent(NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MENU_PLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(LEVEL)))
-                .addGap(22, 22, 22))
+                .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(LOGOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SEND, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EVENT, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CREATE, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(CREATE_C, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         MENU_PLayout.setVerticalGroup(
             MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MENU_PLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(MENU_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LEVEL)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(22, 22, 22)
                 .addComponent(CREATE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EVENT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SEND)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addComponent(TOMAIN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CREATE_C)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addComponent(LOGOUT)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         jPanel4.add(MENU_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
@@ -344,7 +350,6 @@ public class User_Main extends javax.swing.JFrame {
             }
         });
         E_TABLE.setGridColor(new java.awt.Color(204, 204, 204));
-        E_TABLE.setRowSorter(null);
         E_TABLE.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 E_TABLEMouseClicked(evt);
@@ -374,7 +379,6 @@ public class User_Main extends javax.swing.JFrame {
         CREATE_P.setBackground(new java.awt.Color(255, 255, 255));
         CREATE_P.setPreferredSize(new java.awt.Dimension(550, 400));
 
-        CREATE_N.setFont(new java.awt.Font("굴림", 0, 12)); // NOI18N
         CREATE_N.setText("다음");
         CREATE_N.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -478,6 +482,21 @@ public class User_Main extends javax.swing.JFrame {
 
         jPanel4.add(PRODUCT_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 550, 400));
 
+        CREATE_C_P.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout CREATE_C_PLayout = new javax.swing.GroupLayout(CREATE_C_P);
+        CREATE_C_P.setLayout(CREATE_C_PLayout);
+        CREATE_C_PLayout.setHorizontalGroup(
+            CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
+        );
+        CREATE_C_PLayout.setVerticalGroup(
+            CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+
+        jPanel4.add(CREATE_C_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 550, 400));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -551,15 +570,9 @@ public class User_Main extends javax.swing.JFrame {
     
     //송금하기 버튼 클릭시
     private void SENDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SENDActionPerformed
-        
-    }//GEN-LAST:event_SENDActionPerformed
-
-    //메인으로 한번에 가는 버튼
-    private void TOMAINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TOMAINActionPerformed
         removeAll();
-        MAIN_P.setVisible(true);
-        createMain();
-    }//GEN-LAST:event_TOMAINActionPerformed
+        SEND_P.setVisible(true);
+    }//GEN-LAST:event_SENDActionPerformed
 
     //계좌 정보 입력 후 상품 선택으로 넘어가는 버튼
     private void CREATE_NActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATE_NActionPerformed
@@ -570,9 +583,25 @@ public class User_Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CREATE_NActionPerformed
 
+    //제목(메론소다) 클릭시 메인 패널로 이동
+    private void TITLE_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TITLE_PMouseClicked
+        // TODO add your handling code here:
+        removeAll();
+        MAIN_P.setVisible(true);
+        createMain();
+    }//GEN-LAST:event_TITLE_PMouseClicked
+
+    //카드 개설 패널 이동
+    private void CREATE_CActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATE_CActionPerformed
+    removeAll();
+    CREATE_C_P.setVisible(true);
+    }//GEN-LAST:event_CREATE_CActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable A_TABLE;
     private javax.swing.JButton CREATE;
+    private javax.swing.JButton CREATE_C;
+    private javax.swing.JPanel CREATE_C_P;
     private javax.swing.JButton CREATE_N;
     private javax.swing.JPanel CREATE_P;
     private javax.swing.JTextField C_ID;
@@ -591,7 +620,6 @@ public class User_Main extends javax.swing.JFrame {
     private javax.swing.JButton SEND;
     private javax.swing.JPanel SEND_P;
     private javax.swing.JPanel TITLE_P;
-    private javax.swing.JButton TOMAIN;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -604,5 +632,6 @@ public class User_Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
