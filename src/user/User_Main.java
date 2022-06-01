@@ -8,6 +8,7 @@ package user;
 import cyber.bank.gui.Event_View;
 import cyber.bank.gui.Login_Frame;
 import user.create_account.Create_account;
+import user.create_card.*;
 import java.sql.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
@@ -106,6 +107,9 @@ public class User_Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
+        TransportButtGroup = new javax.swing.ButtonGroup();
+        AbroadButtGroup = new javax.swing.ButtonGroup();
+        NoticeButtGroup = new javax.swing.ButtonGroup();
         jPanel4 = new javax.swing.JPanel();
         MAIN_P = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -142,6 +146,18 @@ public class User_Main extends javax.swing.JFrame {
         P_TABLE = new javax.swing.JTable();
         PRODUCT_P = new javax.swing.JPanel();
         CREATE_C_P = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        Check3 = new javax.swing.JCheckBox();
+        Check4 = new javax.swing.JCheckBox();
+        Check5 = new javax.swing.JCheckBox();
+        Check6 = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        CreateCardButt = new javax.swing.JButton();
+        ANumText = new javax.swing.JTextField();
+        Check1 = new javax.swing.JCheckBox();
+        Check2 = new javax.swing.JCheckBox();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -551,15 +567,117 @@ public class User_Main extends javax.swing.JFrame {
 
         CREATE_C_P.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel8.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        jLabel8.setText("알림");
+
+        AbroadButtGroup.add(Check3);
+        Check3.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        Check3.setText("On");
+
+        AbroadButtGroup.add(Check4);
+        Check4.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        Check4.setText("Off");
+
+        NoticeButtGroup.add(Check5);
+        Check5.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        Check5.setText("On");
+
+        NoticeButtGroup.add(Check6);
+        Check6.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        Check6.setText("Off");
+
+        jLabel9.setFont(new java.awt.Font("굴림", 0, 18)); // NOI18N
+        jLabel9.setText("계좌번호");
+
+        CreateCardButt.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        CreateCardButt.setText("카드 생성하기");
+        CreateCardButt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateCardButtActionPerformed(evt);
+            }
+        });
+
+        ANumText.setEditable(false);
+        ANumText.setFont(new java.awt.Font("굴림", 0, 18)); // NOI18N
+        ANumText.setText("jTextField1");
+
+        TransportButtGroup.add(Check1);
+        Check1.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        Check1.setText("On");
+
+        TransportButtGroup.add(Check2);
+        Check2.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        Check2.setText("Off");
+
+        jLabel10.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        jLabel10.setText("교통");
+
+        jLabel11.setFont(new java.awt.Font("굴림", 0, 16)); // NOI18N
+        jLabel11.setText("해외");
+
         javax.swing.GroupLayout CREATE_C_PLayout = new javax.swing.GroupLayout(CREATE_C_P);
         CREATE_C_P.setLayout(CREATE_C_PLayout);
         CREATE_C_PLayout.setHorizontalGroup(
             CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(ANumText, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(CreateCardButt)
+                    .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                            .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel8))
+                            .addGap(45, 45, 45)
+                            .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                                    .addComponent(Check5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Check6))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CREATE_C_PLayout.createSequentialGroup()
+                                    .addComponent(Check1)
+                                    .addGap(47, 47, 47)
+                                    .addComponent(Check2))))
+                        .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addGap(45, 45, 45)
+                            .addComponent(Check3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Check4))))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         CREATE_C_PLayout.setVerticalGroup(
             CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                        .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Check1)
+                            .addComponent(Check2)
+                            .addComponent(jLabel10))
+                        .addGap(34, 34, 34)
+                        .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(Check3)
+                            .addComponent(Check4))
+                        .addGap(27, 27, 27)
+                        .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(CREATE_C_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(Check5)
+                                .addComponent(Check6))))
+                    .addGroup(CREATE_C_PLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(ANumText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(43, 43, 43)
+                .addComponent(CreateCardButt)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         jPanel4.add(CREATE_C_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 550, 400));
@@ -655,8 +773,35 @@ public class User_Main extends javax.swing.JFrame {
 
     //카드 개설 패널 이동
     private void CREATE_CActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATE_CActionPerformed
-    removeAll();
-    CREATE_C_P.setVisible(true);
+        removeAll();
+    
+        int row = A_TABLE.getSelectedRow();
+        String aNum = (String) A_TABLE.getValueAt(row, 0);  // 테이블에서 선택된 계좌번호 받아오기 
+        ANumText.setText(aNum);  
+    
+        // 체크박스버튼 초기화
+        TransportButtGroup.clearSelection();  
+        AbroadButtGroup.clearSelection();
+        NoticeButtGroup.clearSelection();
+        CREATE_C_P.setVisible(true);
+    
+        //카드 개설이 안된 상태면 
+        if((String)A_TABLE.getValueAt(row,3) == "no") {
+            // 체크박스버튼 초기화 
+            TransportButtGroup.clearSelection();  
+            AbroadButtGroup.clearSelection();
+            NoticeButtGroup.clearSelection();
+            // 카드 개설 패널로 이동
+            CREATE_C_P.setVisible(true);
+        } else if(A_TABLE.getValueAt(row,3) == "yes"){  // 카드 개설이 이미 된 상태면
+            showMessageDialog(null,"이미 카드가 개설된 계좌입니다.");
+            MAIN_P.setVisible(true); 
+            createMain();
+        } else if(A_TABLE.getValueAt(row,3) == null){  // 카드를 만들 수 없는 계좌면
+            showMessageDialog(null,"카드를 생성할 수 없는 계좌입니다.");
+            MAIN_P.setVisible(true);
+            createMain();
+        }
     }//GEN-LAST:event_CREATE_CActionPerformed
 
     //계좌 개설 중 통장 종류가 바뀔 때
@@ -693,8 +838,130 @@ public class User_Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CREATE_NActionPerformed
 
+    //카드 생성하기 버튼 클릭시
+    private void CreateCardButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateCardButtActionPerformed
+        // String 타입의 cb 배열 null로 초기화
+        // (교통 "on"/"off", 해외 "on"/"off", 알림 "on"/"off") 
+        String[] cb = {null, null, null}; 
+
+        Button butt = new Button();
+
+        // 교통 기능
+        if(Check1.isSelected()){  // 교통 on 클릭시
+            Transport transport = new Transport();
+            TransportOnCommand transportOn = new TransportOnCommand(transport);
+            butt.setCommand(transportOn);  //교통 on Command로 설정
+            butt.pressed();  // 교통 on 기능 수행
+            cb[0]=transport.on();  // cb 배열의 0번째 인덱스에 transport의 on() 리턴값 "on" 저장
+        } else if (Check2.isSelected()){  // 교통 off 클릭시
+            Transport transport = new Transport();
+            TransportOffCommand transportOff = new TransportOffCommand(transport);
+            butt.setCommand(transportOff);  //교통 off Command로 설정
+            butt.pressed();  // 교통 off 기능 수행
+            cb[0]=transport.off();  // cb 배열의 0번째 인덱스에 transport의 off() 리턴값 "off" 저장
+        }
+        
+        // 해외 기능
+        if(Check3.isSelected()){  // 해외 on 클릭시
+            Abroad abroad = new Abroad();
+            AbroadOnCommand abroadOn = new AbroadOnCommand(abroad);
+            butt.setCommand(abroadOn);
+            butt.pressed();
+            cb[1] = abroad.on();
+        } else if (Check4.isSelected()){  // 해외 off 클릭시
+            Abroad abroad = new Abroad();
+            AbroadOffCommand abroadOff = new AbroadOffCommand(abroad);
+            butt.setCommand(abroadOff);
+            butt.pressed();
+            cb[1] = abroad.off();
+        }
+        
+        // 알림 기능
+        if(Check5.isSelected()){  // 알림 on 클릭시
+            Notice notice = new Notice();
+            NoticeOnCommand noticeOn = new NoticeOnCommand(notice);
+            butt.setCommand(noticeOn);
+            butt.pressed();
+            cb[2] = notice.on();
+        } else if (Check6.isSelected()){  // 알림 off 클릭시
+            Notice notice = new Notice();
+            NoticeOffCommand noticeOff = new NoticeOffCommand(notice);
+            butt.setCommand(noticeOff);
+            butt.pressed();
+            cb[2] = notice.off();
+        }
+        
+        int row = A_TABLE.getSelectedRow();
+        // 테이블에서 계좌번호 가져옴
+        String aNum = (String) A_TABLE.getValueAt(A_TABLE.getSelectedRow(), 0);
+        // 카드번호 : 계좌번호 앞에 c를 붙인 값으로 설정
+        String cNum= 'c' +aNum;  
+
+        // 교통, 해외, 알림 중 선택되지 않은 기능이 있다면
+        if(!((Check1.isSelected() == true || Check2.isSelected() == true) && (Check3.isSelected() == true || Check4.isSelected() == true) && (Check5.isSelected() == true || Check6.isSelected() == true))){
+            showMessageDialog(null,"선택되지 않은 기능이 있습니다.");
+            // 체크박스 초기화 
+            TransportButtGroup.clearSelection();  
+            AbroadButtGroup.clearSelection();
+            NoticeButtGroup.clearSelection();
+            return;
+        }else {  // 교통, 해외, 알림 모두 선택되었다면
+            
+            // card 테이블에 값 넣기 
+            String sql = "insert into card values(?, ?, ?, ?, ?)";
+            try{
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                //접속 URL
+                String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+                String dbUser ="banker"; //MySQL 접속 아이디
+                String dbPass ="1234"; //비밀번호
+                //Mysql bank 데이터베이스와 연결
+            
+                conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,aNum);  // 계좌번호
+                pstmt.setString(2,cNum);  // 카드번호
+                pstmt.setString(3,cb[0]);  // 교통 (on, off)
+                pstmt.setString(4,cb[1]);  // 해외 (on, off)
+                pstmt.setString(5,cb[2]);  // 알림 (on, off)
+            
+                int result = pstmt.executeUpdate();
+                showMessageDialog(null,"카드 생성이 완료되었습니다.");
+                //메인화면으로 이동 
+                MAIN_P.setVisible(true);
+                createMain();
+                A_TABLE.setValueAt("yes",row, 3);
+                
+                
+                // 카드 개설 후 account 테이블의 카드 개설 여부 "yes"로 변경 
+                sql = "update account set ccard =? where account_num=?";
+                try{
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1,"yes"); // 카드개설여부 "yes" 설정
+                    pstmt.setString(2,aNum);   // 계좌번호 aNum으로 설정
+                    result = pstmt.executeUpdate();
+                }catch(ClassNotFoundException | SQLException ex){
+                    System.out.println(ex.getMessage());
+                }finally{
+                    if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+                    if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+                }    
+                
+            }catch(ClassNotFoundException | SQLException ex){
+                System.out.println(ex.getMessage());
+            }finally{
+                if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+                if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+            }
+        }
+    }//GEN-LAST:event_CreateCardButtActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ANumText;
     private javax.swing.JTable A_TABLE;
+    private javax.swing.ButtonGroup AbroadButtGroup;
     private javax.swing.JButton CREATE;
     private javax.swing.JButton CREATE_C;
     private javax.swing.JPanel CREATE_C_P;
@@ -704,6 +971,13 @@ public class User_Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> C_KIND;
     private javax.swing.JTextField C_NAME;
     private javax.swing.JTextField C_PW;
+    private javax.swing.JCheckBox Check1;
+    private javax.swing.JCheckBox Check2;
+    private javax.swing.JCheckBox Check3;
+    private javax.swing.JCheckBox Check4;
+    private javax.swing.JCheckBox Check5;
+    private javax.swing.JCheckBox Check6;
+    private javax.swing.JButton CreateCardButt;
     private javax.swing.JButton EVENT;
     private javax.swing.JPanel EVENT_P;
     private javax.swing.JTable E_TABLE;
@@ -712,18 +986,24 @@ public class User_Main extends javax.swing.JFrame {
     private javax.swing.JPanel MAIN_P;
     private javax.swing.JPanel MENU_P;
     private javax.swing.JLabel NAME;
+    private javax.swing.ButtonGroup NoticeButtGroup;
     private javax.swing.JPanel PRODUCT_P;
     private javax.swing.JTable P_TABLE;
     private javax.swing.JButton SEND;
     private javax.swing.JPanel SEND_P;
     private javax.swing.JPanel TITLE_P;
+    private javax.swing.ButtonGroup TransportButtGroup;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
