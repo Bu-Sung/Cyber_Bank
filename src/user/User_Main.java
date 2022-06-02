@@ -773,34 +773,22 @@ public class User_Main extends javax.swing.JFrame {
 
     //카드 개설 패널 이동
     private void CREATE_CActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATE_CActionPerformed
-        removeAll();
-    
         int row = A_TABLE.getSelectedRow();
-        String aNum = (String) A_TABLE.getValueAt(row, 0);  // 테이블에서 선택된 계좌번호 받아오기 
-        ANumText.setText(aNum);  
-    
-        // 체크박스버튼 초기화
-        TransportButtGroup.clearSelection();  
-        AbroadButtGroup.clearSelection();
-        NoticeButtGroup.clearSelection();
-        CREATE_C_P.setVisible(true);
-    
-        //카드 개설이 안된 상태면 
-        if((String)A_TABLE.getValueAt(row,3) == "no") {
-            // 체크박스버튼 초기화 
+       
+        if(((String)A_TABLE.getValueAt(row,3)) == null) {  // 카드 개설을 할 수 없는 계좌라면
+            showMessageDialog(null,"카드를 생성할 수 없는 계좌입니다.");
+        } else if(((String)A_TABLE.getValueAt(row,3)).equals("yes")){  // 카드 개설이 이미 된 상태면
+            showMessageDialog(null,"이미 카드가 개설된 계좌입니다.");
+        } else {  // 카드 개설이 안된 상태면
+            removeAll();
+            String aNum = (String) A_TABLE.getValueAt(row, 0);  // 테이블에서 선택된 계좌번호 받아오기 
+            ANumText.setText(aNum);  
+            // 체크박스버튼 초기화
             TransportButtGroup.clearSelection();  
             AbroadButtGroup.clearSelection();
             NoticeButtGroup.clearSelection();
             // 카드 개설 패널로 이동
             CREATE_C_P.setVisible(true);
-        } else if(A_TABLE.getValueAt(row,3) == "yes"){  // 카드 개설이 이미 된 상태면
-            showMessageDialog(null,"이미 카드가 개설된 계좌입니다.");
-            MAIN_P.setVisible(true); 
-            createMain();
-        } else if(A_TABLE.getValueAt(row,3) == null){  // 카드를 만들 수 없는 계좌면
-            showMessageDialog(null,"카드를 생성할 수 없는 계좌입니다.");
-            MAIN_P.setVisible(true);
-            createMain();
         }
     }//GEN-LAST:event_CREATE_CActionPerformed
 
