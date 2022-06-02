@@ -1,7 +1,6 @@
 package manager;
 
 import java.sql.*;
-import java.sql.SQLException;
 import java.util.LinkedList;
 
 class User_Level {
