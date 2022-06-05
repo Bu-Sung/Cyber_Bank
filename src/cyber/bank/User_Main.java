@@ -891,9 +891,10 @@ public class User_Main extends javax.swing.JFrame {
         } else if (!((String) A_TABLE.getValueAt(row, 2)).equals("입출금통장")) {
             showMessageDialog(null, "송금은 입출금 통장만 가능합니다.");
         } else {
-            setVisible(false);
-            User_Main u = new User_Main(user);
-            u.setVisible(true);
+            removeAll();
+            SEND_P.setVisible(true);
+            S_ACC.setText((String) A_TABLE.getValueAt(row, 0));
+            BALANCE.setText((String) A_TABLE.getValueAt(row, 1));
         }
     }//GEN-LAST:event_SENDActionPerformed
 
@@ -1114,10 +1115,9 @@ public class User_Main extends javax.swing.JFrame {
                             }
                             s_state.changeLevel(s_user);
                             r_state.changeLevel(r_user);
-                            gotoMain();
-                            R_ACC.setText(null);
-                            MONEY.setText(null);
-                            PW.setText(null);
+                            setVisible(false);
+                            User_Main u = new User_Main(user);
+                            u.setVisible(true);
                         }
                     }
                 }else{}
