@@ -244,8 +244,9 @@ public class User_Main extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MAIN_PLayout.createSequentialGroup()
                         .addComponent(DELETE_C)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DELETE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -255,10 +256,10 @@ public class User_Main extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DELETE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(DELETE_C)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DELETE)
+                    .addComponent(DELETE_C))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel4.add(MAIN_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 550, 400));
@@ -1037,9 +1038,7 @@ public class User_Main extends javax.swing.JFrame {
                 pstmt.executeUpdate();
                 showMessageDialog(null, "카드 생성이 완료되었습니다.");
                 //메인화면으로 이동 
-                MAIN_P.setVisible(true);
-                createMain();
-                A_TABLE.setValueAt("yes", row, 3);
+                
 
                 // 카드 개설 후 account 테이블의 카드 개설 여부 "yes"로 변경 
                 sql = "update account set ccard =? where account_num=?";
@@ -1091,8 +1090,6 @@ public class User_Main extends javax.swing.JFrame {
                         if(a){
                             s_user = send.request(S_ACC.getText());//송금자 상태 객체 받기
                             r_user = send.request(R_ACC.getText());// 수신자 상태 객체 받기
-                            System.out.println(s_user.getId());
-                            System.out.println(r_user.getId());
                             //송금자 총 금액 상태에 따라 등급 전환
                             if (s_user.getTotal() < 100000) { //Normal 등급
                                 s_state = new Normal();
