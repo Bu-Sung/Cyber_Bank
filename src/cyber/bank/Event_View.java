@@ -28,7 +28,7 @@ Connection conn =null;
             String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
             String dbUser ="banker"; //MySQL 접속 아이디
             String dbPass ="1234"; //비밀번호
-            String sql = "select * from manager_news where title=?"; //이미 저장된 혜택 지우기
+            String sql = "select * from news where title=?"; //이미 저장된 혜택 지우기
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, title);
@@ -64,6 +64,9 @@ Connection conn =null;
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("공지사항");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         NEWS.setEditable(false);
         NEWS.setColumns(20);

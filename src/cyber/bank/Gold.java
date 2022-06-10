@@ -3,21 +3,30 @@ package cyber.bank;
 
 
 
+import static cyber.bank.Manager_Main.goldList;
 import java.util.LinkedList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-class Gold extends User_Level implements State{
+class Gold extends User_Level implements State,Observer{
+    private Insert_Event e;
+    
     public Gold(){}
   public Gold(LinkedList l) {//등급 값을 저장
         level= "Gold";
         benefits = l;
   }
-  public Gold(User user) {//등급 값을 저장
-       
-  }
+public  Gold(Insert_Event e) {
+        this.e=e;
+        e.registerObserver(this);
+    }
+    
+    public void update(String date, String title) {
+        goldList.add(new Event(date, title));
+    }
+
 
     @Override
     public void changeLevel(User user) {
@@ -33,7 +42,12 @@ class Gold extends User_Level implements State{
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, "Gold");
             pstmt.setString(2, user.getId());
-            pstmt.executeUpdate();
+            int co = pstmt.executeUpdate();
+            if(co==1){
+                System.out.println("변환");
+            }else{
+                System.out.println("실패");
+            }
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {

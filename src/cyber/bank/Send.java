@@ -54,6 +54,7 @@ public class Send {
             if(rs.next()){
                 user = new User(rs.getString("id"),rs.getString("name"),rs.getString("level"),rs.getInt("total"));
             }
+            System.out.println(user.getTotal());
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }finally{

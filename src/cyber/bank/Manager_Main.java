@@ -5,14 +5,13 @@
  */
 package cyber.bank;
 
-import cyber.bank.Event_View;
 import bankstart.Login_Frame;
-import java.sql.DriverManager;
 import java.sql.*;
 import java.util.LinkedList;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
-import cyber.bank.Manager;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -25,9 +24,16 @@ public class Manager_Main extends javax.swing.JFrame {
     PreparedStatement pstmt =null;
     ResultSet rs = null;
     LinkedList<String> list = new LinkedList<String>();
-    /**
-     * Creates new form Manager_Main
-     */
+    //접속 URL
+    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+    String dbUser ="banker"; //MySQL 접속 아이디
+    String dbPass ="1234"; //비밀번호String
+    //등급별 공지사항을 확인 하기위한 공지사항 목록 변수
+    static LinkedList<Event> vipList = new LinkedList<>();
+    static LinkedList<Event> normalList = new LinkedList<>();
+    static LinkedList<Event> silverList = new LinkedList<>();
+    static LinkedList<Event> goldList = new LinkedList<>();
+    
     public Manager_Main(Manager manager) {
         initComponents();
         this.manager=manager;
@@ -35,7 +41,9 @@ public class Manager_Main extends javax.swing.JFrame {
         removeAll();
         MAIN_P.setVisible(true);
         createMain();
+        setList();
     }
+    
     
     public void removeAll(){//패널 지우기
         MAIN_P.setVisible(false);
@@ -43,27 +51,55 @@ public class Manager_Main extends javax.swing.JFrame {
         LEVEL_BE_P.setVisible(false);
     }
     
-    public void createMain(){ //메인 패널에 있는 보유 계좌 테이블 출력
+    public void createMain(){ 
+        //공지사항 목록을 가지고 각 리스트에 저장하고 전체 목록을 출력        
         table = (DefaultTableModel) M_E_TABLE.getModel();
         table.setRowCount(0);
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //접속 URL
-            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
-            String dbUser ="banker"; //MySQL 접속 아이디
-            String dbPass ="1234"; //비밀번호
             //Mysql bank 데이터베이스와 연결
-            String sql = "select * from manager_news";
+            String sql = "select * from news";
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             table = (DefaultTableModel)M_E_TABLE.getModel();
             table.setNumRows(0);
             while(rs.next()){
+                //매니저 목록
                 Object[] list = {rs.getString("date"),rs.getString("title"),rs.getString("writer")};
                 table.addRow(list);//행추가
-            }
-            
+            }  
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (rs !=null) try {rs.close();} catch (SQLException ex) {}
+            if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
+    }
+    
+    public void setList(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //Mysql bank 데이터베이스와 연결
+            String sql = "select * from news";
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                if(rs.getInt("normal")==1){
+                    normalList.add(new Event(rs.getString("date"),rs.getString("title")));
+                }
+                if(rs.getInt("silver")==1){
+                    silverList.add(new Event(rs.getString("date"),rs.getString("title")));
+                }
+                if(rs.getInt("gold")==1){
+                    goldList.add(new Event(rs.getString("date"),rs.getString("title")));
+                }
+                if(rs.getInt("vip")==1){
+                    vipList.add(new Event(rs.getString("date"),rs.getString("title")));
+                }  
+            }  
         }catch(ClassNotFoundException | SQLException ex){
             System.out.println(ex.getMessage());
         }finally{
@@ -101,9 +137,26 @@ public class Manager_Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        EVENT_P = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        TITLE = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        NEWS = new javax.swing.JTextArea();
+        insert_btn = new javax.swing.JButton();
+        NORMAL_CHECK = new javax.swing.JCheckBox();
+        SILVER_CHECK = new javax.swing.JCheckBox();
+        GOLD_CHECK = new javax.swing.JCheckBox();
+        VIP_CHECK = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
         MAIN_P = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         M_E_TABLE = new javax.swing.JTable();
+        NOMAL = new javax.swing.JButton();
+        SILVER = new javax.swing.JButton();
+        GOLD = new javax.swing.JButton();
+        VIP = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         TITLE_P = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         MENU_P = new javax.swing.JPanel();
@@ -114,13 +167,6 @@ public class Manager_Main extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         INSERT = new javax.swing.JButton();
         CHANGE = new javax.swing.JButton();
-        EVENT_P = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        TITLE = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        NEWS = new javax.swing.JTextArea();
-        insert_btn = new javax.swing.JButton();
         LEVEL_BE_P = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -136,9 +182,92 @@ public class Manager_Main extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 500));
+
+        EVENT_P.setBackground(new java.awt.Color(255, 255, 255));
+        EVENT_P.setPreferredSize(new java.awt.Dimension(550, 400));
+
+        jLabel7.setText("제목");
+
+        jLabel8.setText("내용");
+
+        NEWS.setColumns(20);
+        NEWS.setRows(5);
+        jScrollPane3.setViewportView(NEWS);
+
+        insert_btn.setText("등록하기");
+        insert_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insert_btnActionPerformed(evt);
+            }
+        });
+
+        NORMAL_CHECK.setBackground(new java.awt.Color(255, 255, 255));
+        NORMAL_CHECK.setText("Normal");
+
+        SILVER_CHECK.setBackground(new java.awt.Color(255, 255, 255));
+        SILVER_CHECK.setText("Silver");
+
+        GOLD_CHECK.setBackground(new java.awt.Color(255, 255, 255));
+        GOLD_CHECK.setText("Gold");
+
+        VIP_CHECK.setBackground(new java.awt.Color(255, 255, 255));
+        VIP_CHECK.setText("Vip");
+
+        jLabel9.setText("공지 등급 선택");
+
+        javax.swing.GroupLayout EVENT_PLayout = new javax.swing.GroupLayout(EVENT_P);
+        EVENT_P.setLayout(EVENT_PLayout);
+        EVENT_PLayout.setHorizontalGroup(
+            EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EVENT_PLayout.createSequentialGroup()
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addGroup(EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7)
+                    .addGroup(EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(insert_btn)
+                        .addGroup(EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EVENT_PLayout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(NORMAL_CHECK)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SILVER_CHECK)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(GOLD_CHECK)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(VIP_CHECK)
+                                .addGap(34, 34, 34))
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane3)))
+                    .addComponent(TITLE))
+                .addGap(102, 102, 102))
+        );
+        EVENT_PLayout.setVerticalGroup(
+            EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EVENT_PLayout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TITLE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NORMAL_CHECK)
+                    .addComponent(SILVER_CHECK)
+                    .addComponent(GOLD_CHECK)
+                    .addComponent(VIP_CHECK)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(insert_btn)
+                .addGap(42, 42, 42))
+        );
 
         MAIN_P.setBackground(new java.awt.Color(255, 255, 255));
         MAIN_P.setPreferredSize(new java.awt.Dimension(550, 400));
@@ -173,20 +302,73 @@ public class Manager_Main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(M_E_TABLE);
 
+        NOMAL.setText("Normal");
+        NOMAL.setToolTipText("");
+        NOMAL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NOMALActionPerformed(evt);
+            }
+        });
+
+        SILVER.setText("Silver");
+        SILVER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SILVERActionPerformed(evt);
+            }
+        });
+
+        GOLD.setText("Gold");
+        GOLD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GOLDActionPerformed(evt);
+            }
+        });
+
+        VIP.setText("Vip");
+        VIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VIPActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("등급별 공지사항 확인");
+
         javax.swing.GroupLayout MAIN_PLayout = new javax.swing.GroupLayout(MAIN_P);
         MAIN_P.setLayout(MAIN_PLayout);
         MAIN_PLayout.setHorizontalGroup(
             MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MAIN_PLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                .addGap(25, 25, 25))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(NOMAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SILVER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(GOLD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(VIP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(MAIN_PLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8))
         );
         MAIN_PLayout.setVerticalGroup(
             MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MAIN_PLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(MAIN_PLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(NOMAL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SILVER)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(GOLD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(VIP))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -286,57 +468,9 @@ public class Manager_Main extends javax.swing.JFrame {
                 .addComponent(INSERT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CHANGE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addComponent(LOGOUT)
                 .addGap(29, 29, 29))
-        );
-
-        EVENT_P.setBackground(new java.awt.Color(255, 255, 255));
-        EVENT_P.setPreferredSize(new java.awt.Dimension(550, 400));
-
-        jLabel7.setText("제목");
-
-        jLabel8.setText("내용");
-
-        NEWS.setColumns(20);
-        NEWS.setRows(5);
-        jScrollPane3.setViewportView(NEWS);
-
-        insert_btn.setText("등록하기");
-        insert_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insert_btnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout EVENT_PLayout = new javax.swing.GroupLayout(EVENT_P);
-        EVENT_P.setLayout(EVENT_PLayout);
-        EVENT_PLayout.setHorizontalGroup(
-            EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EVENT_PLayout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
-                .addGroup(EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jScrollPane3)
-                    .addComponent(insert_btn, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(TITLE, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(112, 112, 112))
-        );
-        EVENT_PLayout.setVerticalGroup(
-            EVENT_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EVENT_PLayout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGap(1, 1, 1)
-                .addComponent(TITLE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(insert_btn)
-                .addGap(71, 71, 71))
         );
 
         LEVEL_BE_P.setBackground(new java.awt.Color(255, 255, 255));
@@ -611,17 +745,90 @@ public class Manager_Main extends javax.swing.JFrame {
     private void insert_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insert_btnActionPerformed
         // TODO add your handling code here:
         Insert_Event e = new Insert_Event();
-        Manager_Event m = new Manager_Event(e);
-        User_Event u = new User_Event(e);
-        e.addNews(TITLE.getText(),NEWS.getText(),manager.getName());
-        showMessageDialog(null,"이벤트 등록이 완료되었습니다.");
-        gotoMain();
+        Observer o;
+        String date ; //공지사항 등록 날짜 저장
+        date = new java.util.Date().toInstant().atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_DATE);
+        date = date.substring(0, date.length()-1);//날짜 마지막에 Z도 함께 저장되어서 제거
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //Mysql bank 데이터베이스와 연결
+            String sql = "insert into news value (?,?,?,?,?,?,?,?)";
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,date); //날짜
+            pstmt.setString(2,TITLE.getText()); //제목
+            pstmt.setString(3,NEWS.getText()); //본문
+            pstmt.setString(4,manager.getId()); // 작성자
+            pstmt.setBoolean(5, NORMAL_CHECK.isSelected()); //normal등급 체크여부
+            pstmt.setBoolean(6, SILVER_CHECK.isSelected());//silver등급 체크여부
+            pstmt.setBoolean(7, GOLD_CHECK.isSelected());//gold등급 체크여부
+            pstmt.setBoolean(8, VIP_CHECK.isSelected());//vip등급 체크여부
+            if(!NORMAL_CHECK.isSelected() && !SILVER_CHECK.isSelected() && !GOLD_CHECK.isSelected() && !VIP_CHECK.isSelected()){
+                //등급을 하나도 선택하지 않았을 때
+                showMessageDialog(null,"등급을 선택하여 주세요!!");
+            }else{
+                int co = pstmt.executeUpdate();
+                if(co==1){//DB에 저장 성공시
+                    if(NORMAL_CHECK.isSelected()){//Normal 등급 클릭시
+                        o = new Normal(e); //업데이트 리스트에 normal 추가
+                    }
+                    if(SILVER_CHECK.isSelected()){//Silver 등급 클릭시
+                        o = new Silver(e); //업데이트 리스트에 silver 추가
+                    }
+                    if(GOLD_CHECK.isSelected()){//Gold 등급 클릭시
+                        o = new Gold(e); //업데이트 리스트에 gold 추가
+                    }
+                    if(VIP_CHECK.isSelected()){ //Vip 등급 클릭시
+                        o = new Vip(e); //업데이트 리스트에 vip 추가
+                    }
+                    e.addNews(date, TITLE.getText());
+                    showMessageDialog(null,"이벤트 등록이 완료되었습니다.");
+                    gotoMain();
+                }else{ //제목이 key값이므로 중복시에는 DB저장에 실패
+                    showMessageDialog(null,"제목이 이전과 중복됩니다");
+                }
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
+            if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
+        }
     }//GEN-LAST:event_insert_btnActionPerformed
+ 
+    private void NOMALActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NOMALActionPerformed
+        // TODO add your handling code here:
+        ShowLevelEvent e = new ShowLevelEvent("Normal");
+        e.setVisible(true); //한번에 확인할 수 있도록 새로운 프레임으로 생성
+    }//GEN-LAST:event_NOMALActionPerformed
+
+    //Silver 등급 공지사항 확인
+    private void SILVERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SILVERActionPerformed
+        // TODO add your handling code here:
+        ShowLevelEvent e = new ShowLevelEvent("Silver");
+        e.setVisible(true);
+    }//GEN-LAST:event_SILVERActionPerformed
+    
+    //Gold 등급 공지사항 확인
+    private void GOLDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GOLDActionPerformed
+        // TODO add your handling code here:
+        ShowLevelEvent e = new ShowLevelEvent("Gold");
+        e.setVisible(true);
+    }//GEN-LAST:event_GOLDActionPerformed
+
+    //Vip등급 공지사항 확인
+    private void VIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIPActionPerformed
+        // TODO add your handling code here:
+        ShowLevelEvent e = new ShowLevelEvent("Vip");
+        e.setVisible(true);
+    }//GEN-LAST:event_VIPActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ACCEPT;
     private javax.swing.JButton CHANGE;
     private javax.swing.JPanel EVENT_P;
+    private javax.swing.JButton GOLD;
+    private javax.swing.JCheckBox GOLD_CHECK;
     private javax.swing.JButton INSERT;
     private javax.swing.JList<String> LEVEL;
     private javax.swing.JPanel LEVEL_BE_P;
@@ -631,14 +838,21 @@ public class Manager_Main extends javax.swing.JFrame {
     private javax.swing.JTable M_E_TABLE;
     private javax.swing.JLabel NAME;
     private javax.swing.JTextArea NEWS;
+    private javax.swing.JButton NOMAL;
+    private javax.swing.JCheckBox NORMAL_CHECK;
     private javax.swing.JCheckBox ONE;
+    private javax.swing.JButton SILVER;
+    private javax.swing.JCheckBox SILVER_CHECK;
     private javax.swing.JTextField SLEVEL;
     private javax.swing.JCheckBox THREE;
     private javax.swing.JTextField TITLE;
     private javax.swing.JPanel TITLE_P;
     private javax.swing.JCheckBox TWO;
+    private javax.swing.JButton VIP;
+    private javax.swing.JCheckBox VIP_CHECK;
     private javax.swing.JButton insert_btn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -646,6 +860,7 @@ public class Manager_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

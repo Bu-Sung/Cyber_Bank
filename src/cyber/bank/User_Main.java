@@ -34,11 +34,8 @@ public class User_Main extends javax.swing.JFrame {
         try {
             initComponents();
             this.user = user;
-            NAME.setText(user.getName());
-            LEVEL.setText(user.getLevel());
-            removeAll();
-            MAIN_P.setVisible(true);
-            createMain();
+            
+            gotoMain();
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(User_Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,6 +99,8 @@ public class User_Main extends javax.swing.JFrame {
     public void gotoMain(){
         removeAll();
         MAIN_P.setVisible(true);
+        NAME.setText(user.getName());
+        LEVEL.setText(user.getLevel());
         createMain();
     }
     @SuppressWarnings("unchecked")
@@ -410,6 +409,11 @@ public class User_Main extends javax.swing.JFrame {
         LEVEL.setFont(new java.awt.Font("굴림", 1, 15)); // NOI18N
         LEVEL.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         LEVEL.setText("Normal");
+        LEVEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LEVELMouseClicked(evt);
+            }
+        });
 
         CREATE.setText("계좌 개설하기");
         CREATE.addActionListener(new java.awt.event.ActionListener() {
@@ -937,20 +941,29 @@ public class User_Main extends javax.swing.JFrame {
     //통장 개설하기 버튼 클릭시
     private void CREATE_NActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATE_NActionPerformed
         // TODO add your handling code here:
-
         String pw = C_PW.getText(); //화면에 있는 비밀번호 값 받아오기
         if (pw.isEmpty()) {
             showMessageDialog(null, "비밀번호를 입력해주세요");
         } else {
-            try {
-                table = (DefaultTableModel) P_TABLE.getModel();
-                String product = (String) P_TABLE.getModel().getValueAt(P_TABLE.getSelectedRow(), 0);
-                Create_account acc = new Create_account(user, pw, product);
-                acc.create();
-                gotoMain();
-            } catch (ArrayIndexOutOfBoundsException ex) {
-                showMessageDialog(null, "선택한 상품이 없습니다.");
-            }
+            table = (DefaultTableModel) P_TABLE.getModel();
+            String product = (String) P_TABLE.getModel().getValueAt(P_TABLE.getSelectedRow(), 0);
+            if(product.equals("메론입출금")){
+                Account b = new Melon_Bankbook();
+                b.create_Account(user,pw);
+
+            }else if(product.equals("예금")){
+                Saving_Account b = new Saving_Account();
+                b.create_Account(user,pw);
+                
+            }else if(product.equals("청년주택청약")){
+                Youth_Housing_Subscription b = new  Youth_Housing_Subscription();
+                b.create_Account(user,pw);
+                
+            }else if(product.equals("청년희망적금")){
+                Youth_Hope_Savings b = new Youth_Hope_Savings();
+                b.create_Account(user,pw);  
+            }          
+            gotoMain();
         }
 
     }//GEN-LAST:event_CREATE_NActionPerformed
@@ -1093,12 +1106,16 @@ public class User_Main extends javax.swing.JFrame {
                             //송금자 총 금액 상태에 따라 등급 전환
                             if (s_user.getTotal() < 100000) { //Normal 등급
                                 s_state = new Normal();
+                                user.setLevel("Normal");
                             } else if (s_user.getTotal() >= 100000 && s_user.getTotal() < 500000) { //Silver 등급
                                 s_state = new Silver();
+                                user.setLevel("Silver");
                             } else if (s_user.getTotal() >= 500000 && s_user.getTotal() < 1000000) { //Gold 등급
                                 s_state = new Gold();
+                                user.setLevel("Gold");
                             } else { // Vip 등급
                                 s_state = new Vip();
+                                user.setLevel("Vip");
                             }
                             //수신자 총 금액 상태에 따라 등급 전환
                             if (r_user.getTotal() < 100000) {
@@ -1112,9 +1129,8 @@ public class User_Main extends javax.swing.JFrame {
                             }
                             s_state.changeLevel(s_user);
                             r_state.changeLevel(r_user);
-                            setVisible(false);
-                            User_Main u = new User_Main(user);
-                            u.setVisible(true);
+                            LEVEL.setText(user.getLevel());
+                            gotoMain();
                         }
                     }
                 }else{}
@@ -1149,6 +1165,13 @@ public class User_Main extends javax.swing.JFrame {
         showMessageDialog(null, "카드가 삭제되었습니다.");
         gotoMain();
     }//GEN-LAST:event_DELETE_CActionPerformed
+
+    //회원이 등급 클릭시 해택
+    private void LEVELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LEVELMouseClicked
+        // TODO add your handling code here:
+        ShowBenefit s = new ShowBenefit(LEVEL.getText());
+        s.setVisible(true);
+    }//GEN-LAST:event_LEVELMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ANumText;
