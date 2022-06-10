@@ -7,18 +7,22 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+// 작성자 : 김부성
+// 클래스 사용 이유 : 회원 등급 중 Normal에 대한 이벤트 처리
+
 class Normal extends User_Level implements State ,Observer{
     private Insert_Event e;
     
-    public Normal() {
+    public Normal() { //등급 변환을 위해 사용되는 생성자
     }
 
-    public Normal(LinkedList l) {//등급 값을 저장
+    public Normal(LinkedList l) {// 등급에 대한 혜택 값 저장
+        // 선택한 등급 값을 반환
         level = "Normal";
         benefits = l;
     }
     
-    public  Normal(Insert_Event e) {
+    public  Normal(Insert_Event e) { //옵저버 리스트에 추가를 위한 생성자
         this.e=e;
         e.registerObserver(this);
     }

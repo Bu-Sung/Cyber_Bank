@@ -2,20 +2,20 @@ package cyber.bank;
 
 import java.sql.*;
 import java.util.LinkedList;
-import cyber.bank.User;
+
+    
 
 class User_Level {
-    protected String level;
-    protected LinkedList benefits;
-    User user;
+    protected String level; // 혜택 조정을 위해 선택된 등급
+    protected LinkedList benefits; //저장할 혜택을 저장
     Connection conn =null;
     PreparedStatement pstmt =null;
 
-    public String getLevel() {
+    public String getLevel() { //등급 확인을 위한 함수
         return level;
     }
     
-    public String gettBenefits() {
+    public String gettBenefits() { //혜택을 반환 받기위한 함수
         return " ";
     }
 
@@ -32,23 +32,15 @@ class User_Level {
             String sql = "delete from level where level=?"; //이미 저장된 혜택 지우기
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, level);
-            int co = pstmt.executeUpdate();
-            if(co==1){
-                System.out.println("delete");
-            }else{
-                System.out.println("delete failed");
-            }
-            sql = "insert into level value(?,?)";
+            pstmt.executeUpdate();
+            
+            sql = "insert into level value(?,?)"; //혜택 저장
             pstmt = conn.prepareStatement(sql);
             // 리스트에 저장되어 있는 혜택을 저장하기
             for(int i = 0; i<benefits.size();i++){
                 pstmt.setString(1, level);
                 pstmt.setString(2, (String) benefits.get(i));
-                int a = pstmt.executeUpdate();
-                if(a==1)
-                    System.out.println("into data");
-                else
-                    System.out.println("fail into data");
+                pstmt.executeUpdate();
             }
         }catch(ClassNotFoundException | SQLException ex){
             System.out.println(ex.getMessage());
