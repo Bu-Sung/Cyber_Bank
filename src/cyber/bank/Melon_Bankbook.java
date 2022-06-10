@@ -2,7 +2,6 @@ package cyber.bank;
 
 import java.sql.*;
 import static javax.swing.JOptionPane.showMessageDialog;
-import cyber.bank.User;
 
 class Melon_Bankbook extends Account {
 
@@ -46,8 +45,8 @@ class Melon_Bankbook extends Account {
             int co = pstmt.executeUpdate();
             if (co == 1) {
                 showMessageDialog(null, account_Type.type() + "통장이 개설 되었습니다.");
-            } else {
-                showMessageDialog(null, "통장 개설의 실패하였습니다.");
+            } else {//통장 계좌 번호 중복으로인해 개설 실패시 안내메시지
+                showMessageDialog(null, "자동계좌번호의 중복이 있어\n통장 개설의 실패하였습니다.\n다시 시도해주세요");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());

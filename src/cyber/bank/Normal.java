@@ -1,13 +1,15 @@
 package cyber.bank;
 
+import static cyber.bank.Manager_Main.normalList;
 import java.util.LinkedList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-class Normal extends User_Level implements State {
-
+class Normal extends User_Level implements State ,Observer{
+    private Insert_Event e;
+    
     public Normal() {
     }
 
@@ -15,6 +17,16 @@ class Normal extends User_Level implements State {
         level = "Normal";
         benefits = l;
     }
+    
+    public  Normal(Insert_Event e) {
+        this.e=e;
+        e.registerObserver(this);
+    }
+    
+    public void update(String date, String title) {
+        normalList.add(new Event(date, title));
+    }
+
 
     @Override
     public void changeLevel(User user) {
@@ -30,7 +42,12 @@ class Normal extends User_Level implements State {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, "Normal");
             pstmt.setString(2, user.getId());
-            pstmt.executeUpdate();
+            int co = pstmt.executeUpdate();
+            if(co==1){
+                System.out.println("변환");
+            }else{
+                System.out.println("실패");
+            }
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
