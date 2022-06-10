@@ -1,7 +1,9 @@
 
 package cyber.bank;
 
-// 교통기능 
+// 작성자 : 박체빈
+// 클래스 사용 이유 : 카드 기능 중 교통카드 기능 사용 여부를 수신
+
 public class Transport {
   public Transport( ) {
   }

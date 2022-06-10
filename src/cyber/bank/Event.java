@@ -5,11 +5,9 @@
  */
 package cyber.bank;
 
-/**
- *
- * @author User
- * 클래스 사용 이유 : 고객의 공지사항이 업데이트 되는 것을 확인하기 위해서
- */
+// 작성자 : 김부성
+// 클래스 사용 이유 : 공지사항에 대한 객체리스트 처리를 위해 사용
+
 public class Event {
     String date;
     String title;

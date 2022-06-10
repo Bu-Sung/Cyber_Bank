@@ -5,10 +5,8 @@
  */
 package cyber.bank;
 
-/**
- *
- * @author User
- */
+// 작성자 : 김부성
+// 클래스 사용 이유 : 고객 객체의 정보를 저장하기 위한 클래스
 
 public class User {
     private String id = null;

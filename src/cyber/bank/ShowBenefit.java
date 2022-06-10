@@ -7,10 +7,10 @@ package cyber.bank;
 
 import java.sql.*;
 import javax.swing.DefaultListModel;
-/**
- *
- * @author User
- */
+
+// 작성자 : 김부성
+// 클래스 사용 이유 : 고객이 화면에 있는 등급 선택 해당하는 혜택을 출력
+
 public class ShowBenefit extends javax.swing.JFrame {
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -63,6 +63,8 @@ public class ShowBenefit extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         jLabel1.setText("등급");
 
@@ -99,7 +101,7 @@ public class ShowBenefit extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(LEVEL, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

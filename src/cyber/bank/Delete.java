@@ -9,8 +9,8 @@ import java.sql.*;
 
 /**
  * 작성일 : 2022-06-05
- * @author Kim Bu-Sung
- * 용도 : 계좌와 카드를 삭제하는 함수를 포함
+ * @author 김부성
+ * 클래스 사용 이유 : 계좌, 카드를 삭제하는 기능을 처리한다
  */
 public class Delete {
     private String acc;

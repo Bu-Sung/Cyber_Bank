@@ -12,26 +12,26 @@ import static cyber.bank.Manager_Main.vipList;
 import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
+// 작성자 : 김부성
+// 클래스 사용 이유 : 관리자가 등급별 공지사항을 선택 시 해당하는 등급의 공지사항을 출력한다.
+// 옵저버 패턴의 결과를 등급 별로 확인할 수 있도록 제작
+
 public class ShowLevelEvent extends javax.swing.JFrame {
     DefaultTableModel table;
     String level=null;
-    LinkedList<Event> eList = new LinkedList<>();
+    LinkedList<Event> eList = new LinkedList<>(); // 출력할 등급의 리스트를 저장
 
-    /**
-     * Creates new form ShowLevelEvent
-     */
     public ShowLevelEvent(String level) {
         initComponents();
-        LEVEL.setText(level);
+        LEVEL.setText(level); //선택한 등급을 출력
         this.level=level;
         table = (DefaultTableModel) E_TABLE.getModel();
         createNews();
     }
-    public void createNews(){
+    
+    public void createNews(){ 
+        //옵저버 패턴을 이용한 결과 공지사항 기능의 결과를 확인
+        //등급별로 공지사항을 저장
         if(level.equals("Normal")){
             eList = normalList;
         }else if(level.equals("Silver")){
@@ -42,6 +42,7 @@ public class ShowLevelEvent extends javax.swing.JFrame {
             eList = vipList;
         }
         table.setNumRows(0);
+        //등급에 해당하는 공지사항 출력
         for(int i=0; i<eList.size();i++){
                 Object[] list = {eList.get(i).getDate(),eList.get(i).getTitle()};
                 table.addRow(list);//행추가
@@ -63,6 +64,8 @@ public class ShowLevelEvent extends javax.swing.JFrame {
         E_TABLE = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         EXIT.setText("닫기");
         EXIT.addActionListener(new java.awt.event.ActionListener() {
@@ -140,17 +143,21 @@ public class ShowLevelEvent extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
     //새로고침
     private void CHANGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHANGEActionPerformed
         // TODO add your handling code here
+       //등급별로 화면이 띄워져 있을 때 관리자가 새로운 공지사항을 등록 했을 때 새로고침하여 확인
         createNews();
     }//GEN-LAST:event_CHANGEActionPerformed
-
+    
+    //나가기 버튼
     private void EXITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXITActionPerformed
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_EXITActionPerformed
 
+    //공지사항 클릭시 본문 확인 가능
     private void E_TABLEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_E_TABLEMouseClicked
         // TODO add your handling code here:
         int row = E_TABLE.getSelectedRow();

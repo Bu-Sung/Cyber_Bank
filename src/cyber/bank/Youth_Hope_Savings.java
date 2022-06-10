@@ -2,7 +2,9 @@ package cyber.bank;
 
 import java.sql.*;
 import static javax.swing.JOptionPane.showMessageDialog;
-import cyber.bank.User;
+
+// 작성자 : 이수진
+// 클래스 사용 이유 : 상품 중 청년 희망 적금에 대한 처리 클래스
 
 class Youth_Hope_Savings extends Account {
 
@@ -25,7 +27,7 @@ class Youth_Hope_Savings extends Account {
         accountNumber = Integer.toString(num);
         //db 삽입을 위한
 
-        String sql = "insert into account value(?,?,?,?,?,?,?,?)";
+        String sql = "insert into account value(?,?,?,?,?,?,?)";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
@@ -38,10 +40,13 @@ class Youth_Hope_Savings extends Account {
             pstmt.setString(2, user.getId());
             pstmt.setString(3, pw);
             pstmt.setString(4, account_Type.type());
-            pstmt.setString(5, with_Or_Without_Card.card());
-            pstmt.setString(6, benefits());
-            pstmt.setInt(7, 0); //잔액 초기 설정
-            pstmt.setString(8, null);
+            pstmt.setString(5, benefits()); //상품 종류
+            pstmt.setInt(6, 0); //잔액 초기 설정
+            if(with_Or_Without_Card.card().equals("yes")){//카드 개설 가능 여부에 따라 
+                pstmt.setString(7, "no");// 개설 가능시 초기값 no
+            }else{
+                pstmt.setString(7, null); //불가능 시 null 값 저장
+            }
             int co = pstmt.executeUpdate();
             if (co == 1) {
                 showMessageDialog(null, account_Type.type() + "통장이 개설 되었습니다.");

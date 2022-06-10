@@ -1,28 +1,23 @@
 package cyber.bank;
 
 
-import cyber.bank.User;
-
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.JOptionPane.showMessageDialog;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * 시작일 : 2022-06-01
  * 완료일 : 2022-06-04
- * @author Kim Bu-Sung
- * 용도 : 고객의 송금 기능 구현, 고객 등급 변경
+ * @author 김부성, 손진제
+ * 클래스 사용 이유 : 고객의 송금 실행에 따른 잔액 변경과 그에 따른 고객의 등급 변경
  */
 public class Send {
     private int money; // 송금 금액
     private String s_acc; // 송신자 계좌
     private String r_acc; //수신자 계좌
+    
+    //DB 사용을 위한 변수
     Connection conn =null;
     PreparedStatement pstmt =null;
     ResultSet rs =null;
@@ -30,23 +25,23 @@ public class Send {
     String dbUser ="banker"; //MySQL 접속 아이디
     String dbPass ="1234"; //비밀번호
     
-    public Send(String s_acc, String r_acc, int money){
+    public Send(String s_acc, String r_acc, int money){ //유저 메인에서 송금하기 실행시 발생하는 생성자
         try {
             this.s_acc=s_acc;
             this.r_acc=r_acc;
             this.money=money;
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); //DB사용을 위한 구문
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Send.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public User request(String acc){ // 유저의 상태를 반환
+    public User request(String acc){ // 유저의 최신 상태를 반환
         User user = null;
         try {
             //Mysql bank 데이터베이스와 연결
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
-            //송금자 먼저 정보를 저장
+            //유저 아이디 검색을 위해 입력 받은 계좌번호를 이용한 sql 구문
             String sql = "select * from user where id in (select id from account where account_num=?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, acc);
@@ -75,7 +70,7 @@ public class Send {
             int r_balance = 0;
             //Mysql bank 데이터베이스와 연결
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
-            // 송금자 계좌 정보 저장 SQL
+            // 송금자 계좌 정보 확인 SQL
             String a_sql = "select account_num,balance from account where account_num=? or account_num=?";
             // 잔액 변경 SQL
             String sql = "update account set balance=? where account_num=?";
@@ -89,11 +84,11 @@ public class Send {
                     s = true;
                     if((rs.getInt("balance")-money) >= 0 ){ //송금자 계좌가 송금시 잔액이 있는지 확인
                         s_money = true;
-                        s_balance = rs.getInt("balance")-money;
+                        s_balance = rs.getInt("balance")-money; // 송금자 잔액 정보를 업데이트
                     }
                 }else if(rs.getString("account_num").equals(r_acc)){ //리스트에 수신자 계좌가 있는지 확인
                     r = true;
-                    r_balance = rs.getInt("balance")+money;
+                    r_balance = rs.getInt("balance")+money; // 수신자 잔액 정보를 업데이트
                 }
             }
             if(!s){ //송금자 계좌가 없을 때
@@ -102,7 +97,7 @@ public class Send {
                 showMessageDialog(null, "잘못된 수신자 계좌 입니다.");
             }else if(!s_money){ // 잔액이 부족할 때
                 showMessageDialog(null, "잔액이 부족합니다.");
-            }else{
+            }else{ // 위 해당사항을 모두 만족 했을 때 잔액 변경을 진행
                 pstmt = conn.prepareStatement(sql);
                 //송신자 잔액 저장
                 pstmt.setInt(1,s_balance);
@@ -131,7 +126,7 @@ public class Send {
         try {
             //Mysql bank 데이터베이스와 연결
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
-            // 유저 총 금액 변경 sql - 중첩 질의로 계좌에 따른 아이디 값을 불러와 변경
+            // 유저 총 금액 변경 sql - 중첩 질의를 통행 계좌로 아이디 값을 찾고 그 아이디에 해당하는 계좌에 잔액 합산한다.
             String sql = "update user set total=(select sum(balance) from account where id in (select id from account where account_num=?)) where id in (select id from account where account_num=?)";
             //송금자 잔액 변경
             pstmt = conn.prepareStatement(sql);

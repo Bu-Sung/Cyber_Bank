@@ -12,29 +12,24 @@ import java.util.logging.Logger;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
+// 작성자 : 김부성, 이수진, 박채빈
+// 클래스 사용 이유 : 고객의 관한 인터페이스 및 기능 연결
+
 public class User_Main extends javax.swing.JFrame {
 
-    DefaultTableModel table;
+    DefaultTableModel table; //테이블 변수 재사용
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     String jdbcDriver = "jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
     String dbUser = "banker"; //MySQL 접속 아이디
     String dbPass = "1234"; //비밀번호
-    User user;
+    User user; //로그인한 고객 객체 변수 저장
 
-    /**
-     * Creates new form test
-     */
     public User_Main(User user) {
         try {
             initComponents();
             this.user = user;
-            
             gotoMain();
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -42,7 +37,7 @@ public class User_Main extends javax.swing.JFrame {
         }
     }
 
-    public void removeAll() {
+    public void removeAll() { //패널이 겹쳐서 튀어나오지 않게 지우기
         CREATE_P.setVisible(false);
         EVENT_P.setVisible(false);
         MAIN_P.setVisible(false);
@@ -51,7 +46,7 @@ public class User_Main extends javax.swing.JFrame {
         CREATE_C_P.setVisible(false);
     }
 
-    public void createProduct(String kind) {
+    public void createProduct(String kind) { // 계좌 개설의 상품 목록을 출력
         DefaultTableModel model = (DefaultTableModel) P_TABLE.getModel();
         model.setRowCount(0);
         try {
@@ -96,7 +91,7 @@ public class User_Main extends javax.swing.JFrame {
         }
     }
 
-    public void gotoMain(){
+    public void gotoMain() { //메인 패널 이동시 초기화
         removeAll();
         MAIN_P.setVisible(true);
         NAME.setText(user.getName());
@@ -840,13 +835,14 @@ public class User_Main extends javax.swing.JFrame {
     //계좌 개설 메뉴 클릭시
     private void CREATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATEActionPerformed
         removeAll();
-        CREATE_P.setVisible(true);
+        CREATE_P.setVisible(true); // 계좌개설 패널로 이동
+        // 로그인 정보를 통한 정보 설정
         C_ID.setText(user.getId());
         C_NAME.setText(user.getName());
-        C_PW.setText(null);
-        C_KIND.setSelectedIndex(0);
-        String kind = C_KIND.getSelectedItem().toString();
-        createProduct(kind);
+        C_PW.setText(null); //통장 비밀번호 입력 받기
+        C_KIND.setSelectedIndex(0); // 통장 종류 미선택 설정
+        String kind = C_KIND.getSelectedItem().toString(); //종류를 선택
+        createProduct(kind);// 종류에 따른 상품 목록 출력
     }//GEN-LAST:event_CREATEActionPerformed
 
     //공지사항 메뉴 클릭시
@@ -855,11 +851,11 @@ public class User_Main extends javax.swing.JFrame {
         EVENT_P.setVisible(true);
         table = (DefaultTableModel) E_TABLE.getModel();
         try {
-            String sql = "select * from user_news";
+            String sql = "select * from news where "+user.getLevel().toLowerCase()+"=1"; //유저 등급에 맞는 공지사항  sql
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            table.setNumRows(0);
+            table.setNumRows(0);     
             while (rs.next()) {
                 Object[] list = {rs.getString("date"), rs.getString("title")};
                 table.addRow(list);//행추가
@@ -877,7 +873,7 @@ public class User_Main extends javax.swing.JFrame {
     private void E_TABLEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_E_TABLEMouseClicked
         int row = E_TABLE.getSelectedRow();
         String key = (String) E_TABLE.getValueAt(row, 1);
-        Event_View v = new Event_View(key);
+        Event_View v = new Event_View(key); //제목을 통한 본문 검색
         v.setVisible(true);
     }//GEN-LAST:event_E_TABLEMouseClicked
 
@@ -897,6 +893,7 @@ public class User_Main extends javax.swing.JFrame {
             showMessageDialog(null, "송금은 입출금 통장만 가능합니다.");
         } else {
             removeAll();
+            //송금 패널로 이동하면서 선택한 계좌와 잔액 설정
             SEND_P.setVisible(true);
             S_ACC.setText((String) A_TABLE.getValueAt(row, 0));
             BALANCE.setText((String) A_TABLE.getValueAt(row, 1));
@@ -947,18 +944,16 @@ public class User_Main extends javax.swing.JFrame {
         } else {
             table = (DefaultTableModel) P_TABLE.getModel();
             String product = (String) P_TABLE.getModel().getValueAt(P_TABLE.getSelectedRow(), 0);
-            if(product.equals("메론입출금")){
+            //선택한 상품에 따라 입력받은 정보를 통해 계좌 생성
+            if(product.equals("메론입출금")){ 
                 Account b = new Melon_Bankbook();
                 b.create_Account(user,pw);
-
             }else if(product.equals("예금")){
                 Saving_Account b = new Saving_Account();
                 b.create_Account(user,pw);
-                
             }else if(product.equals("청년주택청약")){
                 Youth_Housing_Subscription b = new  Youth_Housing_Subscription();
-                b.create_Account(user,pw);
-                
+                b.create_Account(user,pw); 
             }else if(product.equals("청년희망적금")){
                 Youth_Hope_Savings b = new Youth_Hope_Savings();
                 b.create_Account(user,pw);  
@@ -1076,10 +1071,10 @@ public class User_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean a= false; //송금 성공 여부
         String pw = new String(PW.getPassword());
-        User s_user;
-        User r_user;
-        State s_state;
-        State r_state;
+        User s_user; //송금자 계좌
+        User r_user; //수신자 계좌
+        State s_state; //송신자 상태
+        State r_state;//수신자 상태
         try {
             if(R_ACC.getText().isEmpty() || MONEY.getText().isEmpty()|| pw.isEmpty()){
                 showMessageDialog(null, "입력되지 않은 항목이 존재합니다.");
@@ -1089,21 +1084,19 @@ public class User_Main extends javax.swing.JFrame {
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, S_ACC.getText());
                 rs = pstmt.executeQuery();
-                if(rs.next()){
+                if(rs.next()){ //송신자 계좌 비밀번호 비교를 위한 검색
                     if (!pw.equals(rs.getString("pw"))) {
                         showMessageDialog(null, "비밀번호 오류입니다,");
                         System.out.println(rs.getString("pw"));
                         System.out.println(pw);
-                    } else {
-                        System.out.println("비밀번호 인증");
-                        System.out.println(rs.getString("pw"));
-                        System.out.println(pw);
+                    } else {//비밀번호가 확인 되었을 때
                         Send send = new Send(S_ACC.getText(), R_ACC.getText(), Integer.parseInt(MONEY.getText()));
                         a = send.changeBalance();
                         if(a){
                             s_user = send.request(S_ACC.getText());//송금자 상태 객체 받기
                             r_user = send.request(R_ACC.getText());// 수신자 상태 객체 받기
                             //송금자 총 금액 상태에 따라 등급 전환
+                            // 송금자 = 현재 로그인 계정이므로 현재 로그인 계정도 전환
                             if (s_user.getTotal() < 100000) { //Normal 등급
                                 s_state = new Normal();
                                 user.setLevel("Normal");
@@ -1127,13 +1120,13 @@ public class User_Main extends javax.swing.JFrame {
                             } else {
                                 r_state = new Vip();
                             }
-                            s_state.changeLevel(s_user);
-                            r_state.changeLevel(r_user);
-                            LEVEL.setText(user.getLevel());
+                            s_state.changeLevel(s_user);//DB 등급 값 변환
+                            r_state.changeLevel(r_user);//DB 등급 값 변환
+                            LEVEL.setText(user.getLevel()); // 회원 등급 출력
                             gotoMain();
                         }
                     }
-                }else{}
+                }
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println(ex.getMessage());

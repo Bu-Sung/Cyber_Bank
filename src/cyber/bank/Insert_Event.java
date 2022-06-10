@@ -2,19 +2,21 @@ package cyber.bank;
 
 import java.util.LinkedList;
 
+// 작성자 : 김부성
+// 클래스 사용 이유 : 관리자가 공지사항을 등록하면 옵저버들에게 알리는 클래스
+
 class Insert_Event implements Subject {
   
-    private String date;
-    private String title;
+    private String date; //작성 날짜
+    private String title; //제목
     private LinkedList<Observer> list;
     
-    public Insert_Event(){
+    public Insert_Event(){ //옵저버의 리스트를 생성하고 함수 사용을 위한 생성자
         list = new LinkedList<Observer>();
-        
     }
     
-    public void addNews(String date, String title) {
-        this.date=date;
+    public void addNews(String date, String title) { //관리자가 공지사항 추가시 실행
+        this.date=date; 
         this.title = title;
         notifyObservers(); //각 등급별 객체 리스트에 저장
     }
