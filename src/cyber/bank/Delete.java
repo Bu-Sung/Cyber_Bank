@@ -17,9 +17,9 @@ public class Delete {
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
-    String jdbcDriver = "jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
-    String dbUser = "banker"; //MySQL 접속 아이디
-    String dbPass = "1234"; //비밀번호
+    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
     
     Delete(String acc) { //계좌 삭제
         try {
@@ -58,6 +58,7 @@ public class Delete {
                     state = new Vip();
                 }
                 state.changeLevel(user);
+                card();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -73,10 +74,10 @@ public class Delete {
     void card() {
         try {
             //카드 삭제
-            String sql = "delete from card where aNum=?"; // 카드 개설 sql
+            String sql = "delete from card where cNum=?"; // 카드 개설 sql
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, acc);
+            pstmt.setString(1, "c"+acc);
             pstmt.executeUpdate();
             //계좌 카드 개설에 no로 업데이트
             sql = "update account set ccard='no' where account_num=?"; //계좌 정보 변경 sql

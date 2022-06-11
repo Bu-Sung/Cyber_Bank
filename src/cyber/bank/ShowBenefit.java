@@ -15,9 +15,9 @@ public class ShowBenefit extends javax.swing.JFrame {
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
-    String jdbcDriver = "jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
-    String dbUser = "banker"; //MySQL 접속 아이디
-    String dbPass = "1234"; 
+    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
     DefaultListModel model; 
     /**
      * Creates new form ShowBenefit
@@ -28,7 +28,7 @@ public class ShowBenefit extends javax.swing.JFrame {
         model= new DefaultListModel();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sql = "select * from level where level=?";
+            String sql = "select * from benefit where level=?";
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, LEVEL.getText());

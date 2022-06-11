@@ -21,9 +21,9 @@ public class Send {
     Connection conn =null;
     PreparedStatement pstmt =null;
     ResultSet rs =null;
-    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; //접속 URL
-    String dbUser ="banker"; //MySQL 접속 아이디
-    String dbPass ="1234"; //비밀번호
+    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
     
     public Send(String s_acc, String r_acc, int money){ //유저 메인에서 송금하기 실행시 발생하는 생성자
         try {
