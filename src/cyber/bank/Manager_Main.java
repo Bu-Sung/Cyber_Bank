@@ -21,9 +21,9 @@ import java.time.format.DateTimeFormatter;
     PreparedStatement pstmt =null;
     ResultSet rs = null;
     //접속 URL
-   String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
-            String dbUser ="banker"; //MySQL 접속 아이디
-            String dbPass ="1234"; //비밀번호
+    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+    String dbUser ="banker"; //MySQL 접속 아이디
+    String dbPass ="1234"; //비밀번호
     LinkedList<String> list = new LinkedList<String>(); // 등급별 혜택 조정시 사용되는 리스트 변수
    
     //등급별 공지사항을 확인 하기위한 공지사항 목록 변수
@@ -773,7 +773,7 @@ import java.time.format.DateTimeFormatter;
             pstmt.setString(1,date); //날짜
             pstmt.setString(2,TITLE.getText()); //제목
             pstmt.setString(3,NEWS.getText()); //본문
-            pstmt.setString(4,manager.getId()); // 작성자
+            pstmt.setString(4,manager.getName()); // 작성자
             pstmt.setBoolean(5, NORMAL_CHECK.isSelected()); //normal등급 체크여부
             pstmt.setBoolean(6, SILVER_CHECK.isSelected());//silver등급 체크여부
             pstmt.setBoolean(7, GOLD_CHECK.isSelected());//gold등급 체크여부

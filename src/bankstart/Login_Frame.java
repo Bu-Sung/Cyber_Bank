@@ -10,11 +10,27 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Login_Frame extends javax.swing.JFrame {
     Connection conn =null;
-    Statement stmt =null;
+    PreparedStatement pstmt =null;
     ResultSet rs = null;
+    String sql;
+    
     public Login_Frame() {
         initComponents();
        
+    }
+    
+    public boolean checkPw() throws SQLException{
+        boolean a=false;
+        String pw = new String(PW.getPassword());
+        rs = pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString("pw").equals(pw)){
+                a=true;
+            }
+        }else{
+            showMessageDialog(null,"아이디 오류입니다.");
+        }
+        return a;
     }
     
     @SuppressWarnings("unchecked")
@@ -130,8 +146,7 @@ public class Login_Frame extends javax.swing.JFrame {
     //로그인 버튼
     private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
         // TODO add your handling code here:
-        String sql = "select * from user where id='"+ID.getText()+"'";
-        String pw = new String(PW.getPassword());
+        boolean check;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
@@ -141,34 +156,40 @@ public class Login_Frame extends javax.swing.JFrame {
             //Mysql bank 데이터베이스와 연결
             
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-            if(rs.next()){//아이디는 키값이기 때문에 하나만 나오므로 if로 해결
-                if(rs.getString("pw").equals(pw)){
-                    if(rs.getString("id").contains("user")){//기본 유저세팅은 아이디가 전부 user로 구성
-                        //로그인한 고객의 정보를 객체로 저장
-                        User user = new User(rs.getString("id"),rs.getString("name"),rs.getString("level"),rs.getInt("total"));
-                        User_Main u = new User_Main(user);
-                        u.setVisible(true); //유저 메인페이지로 이동
-                        setVisible(false);
-                    }else if(rs.getString("id").contains("manager")){//기본 관리자 세팅이 아이디가 manager로 구성
-                        //로그인한 관리자 정보를 객체로 저장
-                        Manager manager = new Manager(rs.getString("id"),rs.getString("name"));
-                        Manager_Main u = new Manager_Main(manager);//관리자 메인 페이지로 이동
-                        u.setVisible(true);
-                        setVisible(false);
-                    }
-                }else{//찾은 아이디의 비밀번호가 일치하지 않을시
+            if(ID.getText().contains("user")){
+                sql = "select * from user where id=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, ID.getText());
+                check = checkPw();
+                if(check){
+                    User user = new User(rs.getString("id"),rs.getString("name"),rs.getString("level"),rs.getInt("total"));
+                    User_Main u = new User_Main(user);
+                    u.setVisible(true); //유저 메인페이지로 이동
+                    setVisible(false);
+                }else{
                     showMessageDialog(null,"비밀번호 오류입니다.");
                 }
-            }else{//table에 아이디가 없을 시
+            }else if(ID.getText().contains("manager")){
+                sql = "select * from manager where id=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, ID.getText());
+                check = checkPw();
+                if(check){
+                    Manager manager = new Manager(rs.getString("id"),rs.getString("name"));
+                    Manager_Main u = new Manager_Main(manager);//관리자 메인 페이지로 이동
+                    u.setVisible(true);
+                    setVisible(false);
+                }else{
+                    showMessageDialog(null,"비밀번호 오류입니다.");
+                }
+            }else{
                 showMessageDialog(null,"아이디 오류입니다.");
             }
         }catch(ClassNotFoundException | SQLException ex){
             System.out.println(ex.getMessage());
         }finally{
             if (rs != null) try {rs.close();} catch (SQLException ex) {}
-            if (stmt !=null) try { stmt.close(); } catch(SQLException ex) {}
+            if (pstmt !=null) try { pstmt.close(); } catch(SQLException ex) {}
             if (conn !=null) try { conn.close(); } catch(SQLException ex) {}
         }
     }//GEN-LAST:event_login_btnActionPerformed
