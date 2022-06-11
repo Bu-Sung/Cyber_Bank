@@ -36,9 +36,9 @@ class Normal extends User_Level implements State ,Observer{
     public void changeLevel(User user) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        String jdbcDriver = "jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
-        String dbUser = "banker"; //MySQL 접속 아이디
-        String dbPass = "1234"; //비밀번호
+        String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String sql = "update user set level=? where id=?";

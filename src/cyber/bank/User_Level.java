@@ -29,12 +29,12 @@ class User_Level {
             
             //Mysql bank 데이터베이스와 연결
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
-            String sql = "delete from level where level=?"; //이미 저장된 혜택 지우기
+            String sql = "delete from benefit where level=?"; //이미 저장된 혜택 지우기
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, level);
             pstmt.executeUpdate();
             
-            sql = "insert into level value(?,?)"; //혜택 저장
+            sql = "insert into benefit value(?,?)"; //혜택 저장
             pstmt = conn.prepareStatement(sql);
             // 리스트에 저장되어 있는 혜택을 저장하기
             for(int i = 0; i<benefits.size();i++){

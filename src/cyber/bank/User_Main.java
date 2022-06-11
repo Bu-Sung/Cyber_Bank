@@ -21,9 +21,9 @@ public class User_Main extends javax.swing.JFrame {
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
-    String jdbcDriver = "jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
-    String dbUser = "banker"; //MySQL 접속 아이디
-    String dbPass = "1234"; //비밀번호
+    String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
     User user; //로그인한 고객 객체 변수 저장
 
     public User_Main(User user) {
@@ -113,6 +113,7 @@ public class User_Main extends javax.swing.JFrame {
         A_TABLE = new javax.swing.JTable();
         DELETE = new javax.swing.JButton();
         DELETE_C = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
         SEND_P = new javax.swing.JPanel();
         S_ACC = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -214,6 +215,11 @@ public class User_Main extends javax.swing.JFrame {
         });
         A_TABLE.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         A_TABLE.setShowHorizontalLines(false);
+        A_TABLE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                A_TABLEMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(A_TABLE);
 
         DELETE.setText("계좌삭제하기");
@@ -230,15 +236,19 @@ public class User_Main extends javax.swing.JFrame {
             }
         });
 
+        jLabel20.setText("계좌 선택 후 우클릭시 카드 조회가 가능합니다!!");
+
         javax.swing.GroupLayout MAIN_PLayout = new javax.swing.GroupLayout(MAIN_P);
         MAIN_P.setLayout(MAIN_PLayout);
         MAIN_PLayout.setHorizontalGroup(
             MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MAIN_PLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(MAIN_PLayout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(DELETE_C)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DELETE)))
@@ -252,7 +262,8 @@ public class User_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MAIN_PLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DELETE)
-                    .addComponent(DELETE_C))
+                    .addComponent(DELETE_C)
+                    .addComponent(jLabel20))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -1033,15 +1044,14 @@ public class User_Main extends javax.swing.JFrame {
         } else {  // 교통, 해외, 알림 모두 선택되었다면
 
             // card 테이블에 값 넣기 
-            String sql = "insert into card values(?, ?, ?, ?, ?)";
+            String sql = "insert into card values( ?, ?, ?, ?)";
             try {
                 conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, aNum);  // 계좌번호
-                pstmt.setString(2, cNum);  // 카드번호
-                pstmt.setString(3, cb[0]);  // 교통 (on, off)
-                pstmt.setString(4, cb[1]);  // 해외 (on, off)
-                pstmt.setString(5, cb[2]);  // 알림 (on, off)
+                pstmt.setString(1, cNum);  // 카드번호
+                pstmt.setString(2, cb[0]);  // 교통 (on, off)
+                pstmt.setString(3, cb[1]);  // 해외 (on, off)
+                pstmt.setString(4, cb[2]);  // 알림 (on, off)
 
                 pstmt.executeUpdate();
                 showMessageDialog(null, "카드 생성이 완료되었습니다.");
@@ -1166,6 +1176,34 @@ public class User_Main extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_LEVELMouseClicked
 
+    //계좌 우클릭 시 카드 정보 조회
+    private void A_TABLEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_A_TABLEMouseClicked
+        // TODO add your handling code here:
+        if(evt.isMetaDown()){
+            int row = A_TABLE.getSelectedRow();
+            String key = (String) A_TABLE.getValueAt(row, 0);
+             try {
+                String sql= "select * from card where cNum=?";
+                conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, "c"+key);  // 카드번호
+                rs = pstmt.executeQuery();
+                if(rs.next()){
+                    showMessageDialog(null, "적용된 기능\n교통 카드 : "+rs.getString("transprot")+"\n해왜 결제 : "+rs.getString("abroad")+"\n알림 기능 : "+ rs.getString("notice"));
+                }else{
+                    showMessageDialog(null, "카드가 존재하지 않습니다.");
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            } finally {
+                if (rs != null) try {rs.close();} catch (SQLException ex) {}
+                if (pstmt != null) try { pstmt.close();} catch (SQLException ex) {}
+                if (conn != null) try {conn.close();} catch (SQLException ex) {}
+            }
+        }
+        
+    }//GEN-LAST:event_A_TABLEMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ANumText;
     private javax.swing.JTable A_TABLE;
@@ -1221,6 +1259,7 @@ public class User_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

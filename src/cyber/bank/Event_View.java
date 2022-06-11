@@ -16,7 +16,7 @@ public class Event_View extends javax.swing.JFrame {
             initComponents();
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
-            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
+            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
             String dbUser ="banker"; //MySQL 접속 아이디
             String dbPass ="1234"; //비밀번호
             String sql = "select * from news where title=?"; 

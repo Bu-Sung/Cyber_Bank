@@ -106,9 +106,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jScrollPane2" min="-2" pref="500" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="DELETE_C" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="DELETE" min="-2" max="-2" attributes="0"/>
@@ -127,6 +129,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="DELETE" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="DELETE_C" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
@@ -157,6 +160,9 @@
                     </Property>
                     <Property name="showHorizontalLines" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="A_TABLEMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -175,6 +181,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DELETE_CActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel20">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#xacc4;&#xc88c; &#xc120;&#xd0dd; &#xd6c4; &#xc6b0;&#xd074;&#xb9ad;&#xc2dc; &#xce74;&#xb4dc; &#xc870;&#xd68c;&#xac00; &#xac00;&#xb2a5;&#xd569;&#xb2c8;&#xb2e4;!!"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

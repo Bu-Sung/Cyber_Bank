@@ -30,9 +30,9 @@ class Youth_Housing_Subscription extends Account {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             //접속 URL
-            String jdbcDriver = "jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC";
-            String dbUser = "banker"; //MySQL 접속 아이디
-            String dbPass = "1234"; //비밀번호
+            String jdbcDriver ="jdbc:mysql://118.67.129.235:3306/bank?serverTimezone=UTC"; 
+            String dbUser ="banker"; //MySQL 접속 아이디
+            String dbPass ="1234"; //비밀번호
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, accountNumber); // 계좌 번호 설정
